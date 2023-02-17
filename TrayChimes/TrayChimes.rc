@@ -1,0 +1,328 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\TrayChimes.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\TrayChimes.ico"
+IDI_TRAY_CLOCK          ICON    DISCARDABLE     "res\\tray_clock.ico"
+IDI_SPEAKER             ICON    DISCARDABLE     "res\\speaker.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 217, 79
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About TrayChimes"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         132,IDC_STATIC,"Static",SS_BITMAP,11,17,20,20
+    LTEXT           "TrayChimes Version 1.22",IDC_STATIC,40,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright Christopher Conti © 2000",IDC_STATIC,40,25,
+                    119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,32,14,WS_GROUP
+    LTEXT           "Written by Christopher Conti",IDC_STATIC,40,52,88,8
+    LTEXT           "cmconti@aol.com",IDC_STATIC,40,61,58,8
+    LTEXT           "PretzelSoft",IDC_STATIC,40,34,35,8
+    LTEXT           "Freeware",IDC_STATIC,40,43,30,8
+END
+
+IDD_TRAYCHIMES_DIALOG DIALOGEX 0, 0, 374, 178
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "TrayChimes"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,252,159,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,313,159,50,14
+    CONTROL         "Chime on &Hour",IDC_CHIME_HOUR,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,9,63,10
+    EDITTEXT        IDC_HOUR_CHIME,95,7,187,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Play",IDC_PLAY_00,291,7,16,14,BS_ICON | BS_FLAT | NOT 
+                    WS_TABSTOP
+    PUSHBUTTON      "Browse...",IDC_HOUR_BROWSE,313,7,50,14
+    CONTROL         "Chime Hour &Count",IDC_CHIME_COUNT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,26,73,10
+    EDITTEXT        IDC_HOUR_BONG,95,24,187,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Play",IDC_PLAY_HOUR,291,24,16,14,BS_ICON | BS_FLAT | 
+                    NOT WS_TABSTOP
+    PUSHBUTTON      "Browse...",IDC_BONG_BROWSE,313,24,50,14
+    CONTROL         "Chime At Quarter &Past",IDC_CHIME_15,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,43,85,10
+    EDITTEXT        IDC_15_CHIME,95,41,187,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Play",IDC_PLAY_15,291,41,16,14,BS_ICON | BS_FLAT | NOT 
+                    WS_TABSTOP
+    PUSHBUTTON      "Browse...",IDC_15_BROWSE,313,41,50,14
+    CONTROL         "Chime At Ha&lf Past",IDC_CHIME_30,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,60,75,10
+    EDITTEXT        IDC_30_CHIME,95,58,187,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Play",IDC_PLAY_30,291,58,16,14,BS_ICON | BS_FLAT | NOT 
+                    WS_TABSTOP
+    PUSHBUTTON      "Browse...",IDC_30_BROWSE,313,58,50,14
+    CONTROL         "Chime At Quarter &Till",IDC_CHIME_45,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,77,78,10
+    EDITTEXT        IDC_45_CHIME,95,75,187,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Play",IDC_PLAY_45,291,75,16,14,BS_ICON | BS_FLAT | NOT 
+                    WS_TABSTOP
+    PUSHBUTTON      "Browse...",IDC_45_BROWSE,313,75,50,14
+    CONTROL         "Alarm &Set",IDC_ALARM_SET,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,134,46,10
+    CONTROL         "Play Alarm &Once",IDC_ALARM_ONCE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,148,68,10
+    CONTROL         "Display Message for Alarm",IDC_DISPLAY_MESSAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,162,99,10
+    EDITTEXT        IDC_ALARM_CHIME,95,115,187,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Play",IDC_PLAY_ALARM,291,115,16,14,BS_ICON | BS_FLAT | 
+                    NOT WS_TABSTOP
+    PUSHBUTTON      "Browse...",IDC_ALARM_BROWSE,313,115,50,14
+    PUSHBUTTON      "Edit &Message...",IDC_EDIT_MESSAGE,109,159,61,14
+    PUSHBUTTON      "About...",ID_POPUP_ABOUT,190,159,50,14
+    EDITTEXT        IDC_TIME_EDIT,6,115,40,14,ES_AUTOHSCROLL | NOT 
+                    WS_TABSTOP
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,101,
+                    356,3
+    LTEXT           "Alarm Time:",IDC_STATIC,7,106,38,8
+END
+
+IDD_MESSAGE DIALOG DISCARDABLE  0, 0, 266, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Alarm Message"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_MESSAGE,6,7,247,50,ES_MULTILINE | ES_AUTOHSCROLL | 
+                    ES_WANTRETURN
+    DEFPUSHBUTTON   "OK",IDOK,69,68,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,147,68,50,14
+END
+
+IDD_DISPLAY_MESSAGE DIALOG DISCARDABLE  0, 0, 266, 95
+STYLE DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Alarm"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,27,73,96,14
+    LTEXT           "Static",IDC_MESSAGE,9,5,247,50,SS_SUNKEN
+    PUSHBUTTON      "&Snooze for 10 Minutes",IDC_SNOOZE,143,73,96,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,22,0,1
+ PRODUCTVERSION 1,22,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "PretzelSoft\0"
+            VALUE "FileDescription", "TRAYCHIMES Application\0"
+            VALUE "FileVersion", "1.22\0"
+            VALUE "InternalName", "TRAYCHIMES\0"
+            VALUE "LegalCopyright", "Copyright Christopher Conti © 2000\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "TRAYCHIMES.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "TRAYCHIMES Application\0"
+            VALUE "ProductVersion", "1.22\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_TRAYCHIMES_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 367
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 171
+    END
+
+    IDD_MESSAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 259
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_DISPLAY_MESSAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 259
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_TRAY_CONTEXT MENU DISCARDABLE 
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Properties",                 ID_POPUP_PROPERTIES
+        MENUITEM "&About...",                   ID_POPUP_ABOUT
+        MENUITEM "E&xit",                       ID_POPUP_EXIT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_SPEAKER             BITMAP  DISCARDABLE     "res\\speaker.bmp"
+IDB_REGULATOR           BITMAP  DISCARDABLE     "res\\regulator.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About TrayChimes..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_POPUP_PROPERTIES     "Display Properties"
+    ID_POPUP_ABOUT          "Display About Box"
+    ID_POPUP_EXIT           "Close program"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\TrayChimes.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
