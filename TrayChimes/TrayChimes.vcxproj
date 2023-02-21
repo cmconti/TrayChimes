@@ -213,9 +213,9 @@
     <None Include="res\TrayChimes.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\AudioPlayback.ico" />
     <Image Include="res\regulator.bmp" />
     <Image Include="res\regulator.ico" />
-    <Image Include="res\speaker.ico" />
     <Image Include="res\TrayChimes.ico" />
     <Image Include="res\tray_clock.ico" />
   </ItemGroup>

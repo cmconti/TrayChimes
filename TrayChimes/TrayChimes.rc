@@ -76,7 +76,7 @@ IDR_MAINFRAME           ICON                    "res\\TrayChimes.ico"
 
 IDI_TRAY_CLOCK          ICON                    "res\\tray_clock.ico"
 
-IDI_SPEAKER             ICON                    "res\\speaker.ico"
+IDI_SPEAKER             ICON                    "res\\AudioPlayback.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
