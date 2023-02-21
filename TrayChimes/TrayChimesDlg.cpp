@@ -90,12 +90,12 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
         m_bDisplayMessage = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"DisplayMessage", FALSE);
         m_bPlayAlarmOnce = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"PlayAlarmOnce", FALSE);
 
-        m_str15Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime15", L"multi2.wav");
-        m_str30Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime30", L"multi2.wav");
-        m_str45Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime45", L"multi2.wav");
-        m_str00Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime00", L"hourly.wav");
-        m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"multi2.wav");
-        m_strAlarmChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"AlarmChime", L"alarm.wav");
+        m_str15Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime15", L"HourChime.wav");
+        m_str30Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime30", L"HourChime.wav");
+        m_str45Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime45", L"HourChime.wav");
+        m_str00Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime00", L"Westminster.wav");
+        m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"HourChime.wav");
+        m_strAlarmChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"AlarmChime", L"Alarm.wav");
     }
     if (!pDX->m_bSaveAndValidate)
     {

@@ -9,7 +9,6 @@
 #define IDR_MAINFRAME                   128
 #define IDI_TRAY_CLOCK                  129
 #define IDR_TRAY_CONTEXT                130
-#define IDB_SPEAKER                     131
 #define IDB_REGULATOR                   132
 #define IDD_MESSAGE                     133
 #define IDD_DISPLAY_MESSAGE             134
