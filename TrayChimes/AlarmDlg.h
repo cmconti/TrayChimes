@@ -1,39 +1,36 @@
 // AlarmDlg.h : header file
 //
 
+#pragma once
+
 /////////////////////////////////////////////////////////////////////////////
 // CAlarmDlg dialog
 
-class CAlarmDlg : public CDialog
+class CAlarmDlg : public CDialogEx
 {
-// Construction
+    // Construction
 public:
-	CAlarmDlg(CWnd* pParent = NULL);   // standard constructor
+    CAlarmDlg(CWnd* pParent = nullptr);   // standard constructor
 
-// Dialog Data
-	//{{AFX_DATA(CAlarmDlg)
-	enum { IDD = IDD_DISPLAY_MESSAGE };
-	CStatic	m_Message;
-	CString	m_strMessage;
-	//}}AFX_DATA
+    // Dialog Data
+#ifdef AFX_DESIGN_TIME
+    enum { IDD = IDD_DISPLAY_MESSAGE };
+#endif
+    CStatic	m_Message;
+    CString	m_strMessage;
 
+    // Overrides
+        // ClassWizard generated virtual function overrides
+protected:
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAlarmDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
+    // Implementation
 protected:
 
-	// Generated message map functions
-	//{{AFX_MSG(CAlarmDlg)
-	virtual void OnCancel();
-	virtual void OnOK();
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSnooze();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    virtual void OnCancel();
+    virtual void OnOK();
+    virtual BOOL OnInitDialog();
+    afx_msg void OnSnooze();
+    DECLARE_MESSAGE_MAP();
 };

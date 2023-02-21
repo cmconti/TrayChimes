@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -7,19 +7,14 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
 #include "afxres.h"
+#include "verrsrc.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
-
-/////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -27,18 +22,22 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE
 BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
     "#include ""afxres.h""\r\n"
+    "#include ""verrsrc.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -46,15 +45,17 @@ BEGIN
     "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-    "#ifdef _WIN32\r\n"
     "LANGUAGE 9, 1\r\n"
-    "#pragma code_page(1252)\r\n"
-    "#endif\r\n"
     "#include ""res\\TrayChimes.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
-    "#endif\0"
+    "#if !defined(_AFXDLL)\r\n"
+    "#include ""afxribbon.rc""   // MFC ribbon and control bar resources\r\n"
+    "#endif\r\n"
+    "#endif\r\n"
+    "\0"
 END
 
+/////////////////////////////////////////////////////////////////////////////
 #endif    // APSTUDIO_INVOKED
 
 
@@ -65,19 +66,23 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\TrayChimes.ico"
-IDI_TRAY_CLOCK          ICON    DISCARDABLE     "res\\tray_clock.ico"
-IDI_SPEAKER             ICON    DISCARDABLE     "res\\speaker.ico"
+IDR_MAINFRAME           ICON         "res\\TrayChimes.ico"
+IDI_TRAY_CLOCK          ICON         "res\\tray_clock.ico"
+IDI_SPEAKER             ICON         "res\\speaker.ico"
+
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 217, 79
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOGEX 0, 0, 217, 79
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About TrayChimes"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
 BEGIN
     CONTROL         132,IDC_STATIC,"Static",SS_BITMAP,11,17,20,20
     LTEXT           "TrayChimes Version 1.22",IDC_STATIC,40,10,119,8,
@@ -92,10 +97,12 @@ BEGIN
 END
 
 IDD_TRAYCHIMES_DIALOG DIALOGEX 0, 0, 374, 178
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+STYLE DS_SHELLFONT | WS_POPUP | WS_VISIBLE | WS_CAPTION
+ | WS_THICKFRAME
+ | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "TrayChimes"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Shell Dlg"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,252,159,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,313,159,50,14
@@ -148,10 +155,10 @@ BEGIN
     LTEXT           "Alarm Time:",IDC_STATIC,7,106,38,8
 END
 
-IDD_MESSAGE DIALOG DISCARDABLE  0, 0, 266, 95
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_MESSAGE DIALOGEX  0, 0, 266, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Alarm Message"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
 BEGIN
     EDITTEXT        IDC_MESSAGE,6,7,247,50,ES_MULTILINE | ES_AUTOHSCROLL | 
                     ES_WANTRETURN
@@ -159,18 +166,16 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,147,68,50,14
 END
 
-IDD_DISPLAY_MESSAGE DIALOG DISCARDABLE  0, 0, 266, 95
-STYLE DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_DISPLAY_MESSAGE DIALOGEX  0, 0, 266, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Alarm"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,27,73,96,14
     LTEXT           "Static",IDC_MESSAGE,9,5,247,50,SS_SUNKEN
     PUSHBUTTON      "&Snooze for 10 Minutes",IDC_SNOOZE,143,73,96,14
 END
 
-
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -179,19 +184,19 @@ END
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,22,0,1
  PRODUCTVERSION 1,22,0,1
- FILEFLAGSMASK 0x3fL
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
 #ifdef _DEBUG
- FILEFLAGS 0x1L
+ FILEFLAGS VS_FF_DEBUG
 #else
  FILEFLAGS 0x0L
 #endif
- FILEOS 0x4L
- FILETYPE 0x1L
- FILESUBTYPE 0x0L
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE VFT2_UNKNOWN
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "040904b0"
+        BLOCK "040904B0"
         BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "PretzelSoft\0"
@@ -209,12 +214,9 @@ BEGIN
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x409, 1200
+        VALUE "Translation", 0x0409, 1200
     END
 END
-
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -222,7 +224,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -264,7 +266,7 @@ END
 // Menu
 //
 
-IDR_TRAY_CONTEXT MENU DISCARDABLE 
+IDR_TRAY_CONTEXT MENU 
 BEGIN
     POPUP "Popup"
     BEGIN
@@ -280,30 +282,27 @@ END
 // Bitmap
 //
 
-IDB_SPEAKER             BITMAP  DISCARDABLE     "res\\speaker.bmp"
-IDB_REGULATOR           BITMAP  DISCARDABLE     "res\\regulator.bmp"
+IDB_SPEAKER             BITMAP       "res\\speaker.bmp"
+IDB_REGULATOR           BITMAP       "res\\regulator.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&About TrayChimes..."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_POPUP_PROPERTIES     "Display Properties"
     ID_POPUP_ABOUT          "Display About Box"
     ID_POPUP_EXIT           "Close program"
 END
 
-#endif    // English (U.S.) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
+#endif
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -316,12 +315,12 @@ END
 #define _AFX_NO_PROPERTY_RESOURCES
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE 9, 1
-#pragma code_page(1252)
+#include "res\\TrayChimes.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"      // Standard components
+#if !defined(_AFXDLL)
+#include "afxribbon.rc"   // MFC ribbon and control bar resources
 #endif
-#include "res\TrayChimes.rc2"  // non-Microsoft Visual C++ edited resources
-#include "afxres.rc"         // Standard components
 #endif
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

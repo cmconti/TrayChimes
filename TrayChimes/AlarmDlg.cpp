@@ -1,70 +1,60 @@
 // AlarmDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "traychimes.h"
 //#include "AlarmDlg.h"
 #include "TrayChimesDlg.h"
+#include "afxdialogex.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CAlarmDlg dialog
 
-
-CAlarmDlg::CAlarmDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CAlarmDlg::IDD, pParent)
+CAlarmDlg::CAlarmDlg(CWnd* pParent /*=nullptr*/)
+    : CDialogEx(IDD_DISPLAY_MESSAGE, pParent)
 {
-	//{{AFX_DATA_INIT(CAlarmDlg)
-	m_strMessage = _T("");
-	//}}AFX_DATA_INIT
+    m_strMessage = L"";
 }
-
 
 void CAlarmDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAlarmDlg)
-	DDX_Control(pDX, IDC_MESSAGE, m_Message);
-	DDX_Text(pDX, IDC_MESSAGE, m_strMessage);
-	//}}AFX_DATA_MAP
+    CDialogEx::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_MESSAGE, m_Message);
+    DDX_Text(pDX, IDC_MESSAGE, m_strMessage);
 }
 
-
-BEGIN_MESSAGE_MAP(CAlarmDlg, CDialog)
-	//{{AFX_MSG_MAP(CAlarmDlg)
-	ON_BN_CLICKED(IDC_SNOOZE, OnSnooze)
-	//}}AFX_MSG_MAP
+BEGIN_MESSAGE_MAP(CAlarmDlg, CDialogEx)
+    ON_BN_CLICKED(IDC_SNOOZE, OnSnooze)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CAlarmDlg message handlers
 
-void CAlarmDlg::OnCancel() 
+void CAlarmDlg::OnCancel()
 {
-    CDialog::OnCancel();
+    CDialogEx::OnCancel();
 }
 
-void CAlarmDlg::OnOK() 
+void CAlarmDlg::OnOK()
 {
-    CDialog::OnOK();
+    CDialogEx::OnOK();
 }
 
-BOOL CAlarmDlg::OnInitDialog() 
+BOOL CAlarmDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
-	
-	SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-	
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+    CDialogEx::OnInitDialog();
+
+    SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+
+    return TRUE;  // return TRUE unless you set the focus to a control
+    // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CAlarmDlg::OnSnooze() 
+void CAlarmDlg::OnSnooze()
 {
     CTrayChimesDlg* pParent = (CTrayChimesDlg*)m_pParentWnd;
 

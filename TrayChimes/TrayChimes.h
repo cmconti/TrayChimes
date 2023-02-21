@@ -1,8 +1,10 @@
 // TrayChimes.h : main header file for the TRAYCHIMES application
 //
 
+#pragma once
+
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'pch.h' before including this file for PCH
 #endif
 
 #include "resource.h"		// main symbols
@@ -15,24 +17,18 @@
 class CTrayChimesApp : public CWinApp
 {
 public:
-	CTrayChimesApp();
+    CTrayChimesApp();
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CTrayChimesApp)
-	public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	//}}AFX_VIRTUAL
+    // Overrides
+public:
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
 
-// Implementation
+    // Implementation
     void SetSharedHWND(HWND hWnd);
     HWND GetSharedHWND();
 
-	//{{AFX_MSG(CTrayChimesApp)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP();
 };
-
 
 /////////////////////////////////////////////////////////////////////////////
