@@ -189,7 +189,6 @@
     <ClInclude Include="MessageDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TimeSelection.h" />
     <ClInclude Include="TrayChimes.h" />
     <ClInclude Include="TrayChimesDlg.h" />
   </ItemGroup>
@@ -202,7 +201,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TimeSelection.cpp" />
     <ClCompile Include="TrayChimes.cpp" />
     <ClCompile Include="TrayChimesDlg.cpp" />
   </ItemGroup>

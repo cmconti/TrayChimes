@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "TimeSelection.h"
 #include "AlarmDlg.h"
 
 // CAboutDlg dialog used for App About
@@ -85,7 +84,7 @@ protected:
     BOOL m_bAllowShowWindow;
 
     CAboutDlg m_dlgAbout;
-    CTimeSelection m_TimeSelection;
+    CDateTimeCtrl m_TimeSelection;
 
     CAlarmDlg m_AlarmDlg;
 

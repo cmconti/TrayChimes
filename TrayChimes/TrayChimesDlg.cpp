@@ -142,12 +142,6 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
         m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"HourChime.wav");
         m_strAlarmChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"AlarmChime", L"Alarm.wav");
     }
-    if (!pDX->m_bSaveAndValidate)
-    {
-        //set alarm time in control
-        m_TimeSelection.SetHour(m_nAlarmHour);
-        m_TimeSelection.SetMinute(m_nAlarmMinute);
-    }
 
     CDialogEx::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_PLAY_ALARM, m_btnPlayAlarm);
@@ -170,16 +164,27 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Check(pDX, IDC_ALARM_SET, m_bAlarmSet);
     DDX_Check(pDX, IDC_DISPLAY_MESSAGE, m_bDisplayMessage);
     DDX_Check(pDX, IDC_ALARM_ONCE, m_bPlayAlarmOnce);
+    DDX_Control(pDX, IDC_TIME_EDIT, m_TimeSelection);
+
+    if (!pDX->m_bSaveAndValidate)
+    {
+        //set alarm time in control
+        CTime time(2005, 1, 1, m_nAlarmHour, m_nAlarmMinute, 0);
+        m_TimeSelection.SetTime(&time);
+    }
 
     if (pDX->m_bSaveAndValidate)
     {
+        CTime time;
+        m_TimeSelection.GetTime(time);
+
         //get alarm time from control
-        if ((m_nAlarmMinute != m_TimeSelection.GetMinute()) || (m_nAlarmHour != m_TimeSelection.GetHour()))
+        if ((m_nAlarmMinute != time.GetMinute()) || (m_nAlarmHour != time.GetHour()))
         {
             //alarm has changed, so reset snooze
             TRACE(L"reset Alarm 3\n");
-            m_nActualAlarmHour = m_nAlarmHour = m_TimeSelection.GetHour();
-            m_nActualAlarmMinute = m_nAlarmMinute = m_TimeSelection.GetMinute();
+            m_nActualAlarmHour = m_nAlarmHour = time.GetHour();
+            m_nActualAlarmMinute = m_nAlarmMinute = time.GetMinute();
             SetTipText();
         }
     }
@@ -339,13 +344,16 @@ BOOL CTrayChimesDlg::OnInitDialog()
 
     SetTipText(TRUE);
 
-    CWnd* pWnd = GetDlgItem(IDC_TIME_EDIT);
-    CRect rectTime;
-    pWnd->GetClientRect(rectTime);
-    pWnd->MapWindowPoints(this, rectTime);
-    pWnd->DestroyWindow();
+    wchar_t buf[1000];
 
-    m_TimeSelection.Create(L"Time", rectTime, this, IDC_TIME_EDIT);
+    int x = GetLocaleInfoEx(
+        LOCALE_NAME_USER_DEFAULT,
+        LOCALE_SSHORTTIME,
+        buf,
+        _countof(buf)
+    );
+
+    m_TimeSelection.SetFormat(buf);
 
     m_nTimerID = SetTimer(1, 1000, NULL);
 
