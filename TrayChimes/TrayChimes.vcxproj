@@ -214,10 +214,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\AudioPlayback.ico" />
-    <Image Include="res\regulator.bmp" />
-    <Image Include="res\regulator.ico" />
-    <Image Include="res\TrayChimes.ico" />
-    <Image Include="res\tray_clock.ico" />
+    <Image Include="res\Regulator.png" />
+    <Image Include="res\RegulatorFace.ico" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="res\readme.txt">

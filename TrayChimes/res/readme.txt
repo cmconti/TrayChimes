@@ -3,8 +3,7 @@ TrayChimes v1.22
 written by Chris Conti
 
 Program requirements:
-Windows 95 or Windows NT 4.0
-wave file (sound) output device
+Windows 10
 
 This program installs a tray icon which plays chimes on every quarter hour.
 You can also set an alarm for any time of the day which will cause a sound
@@ -48,3 +47,10 @@ Release Info:
         1.  Fixed problem of tray icon disappearing when explorer restarts (n.b. requires IE4
             w/shell update or Win98/Win200 (or later) to work ).
         2.  Recompiled with VC6 to reduce exe size.
+
+
+Attributions:
+- Clock Image by VectorPortal.com
+  - <a href=" https://www.vectorportal.com" >Vectorportal.com</a>,  <a class="external text" href="https://creativecommons.org/licenses/by/4.0/" >CC BY</a>
+- Speaker Image by Microsoft from the Visual Studio Image library.
+  - https://learn.microsoft.com/en-us/visualstudio/designers/the-visual-studio-image-library?view=vs-2022

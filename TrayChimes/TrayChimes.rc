@@ -72,9 +72,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\TrayChimes.ico"
-
-IDI_TRAY_CLOCK          ICON                    "res\\tray_clock.ico"
+IDR_MAINFRAME           ICON                    "res\\RegulatorFace.ico"
 
 IDI_SPEAKER             ICON                    "res\\AudioPlayback.ico"
 
@@ -84,19 +82,19 @@ IDI_SPEAKER             ICON                    "res\\AudioPlayback.ico"
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 217, 79
+IDD_ABOUTBOX DIALOGEX 0, 0, 247, 87
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About TrayChimes"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    CONTROL         IDB_REGULATOR,IDC_STATIC,"Static",SS_BITMAP,11,17,20,20
-    LTEXT           "TrayChimes Version 1.22",IDC_STATIC,40,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright Christopher Conti © 2000",IDC_STATIC,40,25,170,8
-    DEFPUSHBUTTON   "OK",IDOK,178,7,32,14,WS_GROUP
-    LTEXT           "Written by Christopher Conti",IDC_STATIC,40,52,170,8
-    LTEXT           "cmconti@aol.com",IDC_STATIC,40,61,170,8
-    LTEXT           "PretzelSoft",IDC_STATIC,40,34,170,8
-    LTEXT           "Freeware",IDC_STATIC,40,43,170,8
+    CONTROL         "",IDC_REGULATOR,"Static",SS_BITMAP | SS_REALSIZEIMAGE,7,7,15,13
+    LTEXT           "TrayChimes Version 1.22",IDC_STATIC,70,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright Christopher Conti © 2000",IDC_STATIC,70,25,170,8
+    DEFPUSHBUTTON   "OK",IDOK,208,7,32,14,WS_GROUP
+    LTEXT           "Written by Christopher Conti",IDC_STATIC,70,52,170,8
+    LTEXT           "cmconti@aol.com",IDC_STATIC,70,61,170,8
+    LTEXT           "PretzelSoft",IDC_STATIC,70,34,170,8
+    LTEXT           "Freeware",IDC_STATIC,70,43,170,8
 END
 
 IDD_TRAYCHIMES_DIALOG DIALOGEX 0, 0, 374, 178
@@ -211,9 +209,9 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 210
+        RIGHTMARGIN, 240
         TOPMARGIN, 7
-        BOTTOMMARGIN, 72
+        BOTTOMMARGIN, 80
     END
 
     IDD_TRAYCHIMES_DIALOG, DIALOG
@@ -261,14 +259,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Bitmap
-//
-
-IDB_REGULATOR           BITMAP                  "res\\regulator.bmp"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // AFX_DIALOG_LAYOUT
 //
 
@@ -276,6 +266,14 @@ IDD_ABOUTBOX AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// PNG
+//
+
+IDB_REGULATOR_PNG       PNG                     "res\\Regulator.png"
 
 
 /////////////////////////////////////////////////////////////////////////////

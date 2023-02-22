@@ -35,14 +35,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="res\readme.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="AlarmDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -82,34 +74,26 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\regulator.bmp">
+    <Image Include="res\AudioPlayback.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\regulator.ico">
+    <Image Include="res\Regulator.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\speaker.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\speaker.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\tray_clock.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\TrayChimes.ico">
+    <Image Include="res\RegulatorFace.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="res\Alarm.wav">
+    <CopyFileToFolders Include="res\readme.txt" />
+    <CopyFileToFolders Include="res\Alarm.wav">
       <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="res\Hourly.WAV">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="res\HourChime.wav">
       <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="res\Westminster.WAV">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="res\Westminster.wav">
       <Filter>Resource Files</Filter>
-    </Media>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

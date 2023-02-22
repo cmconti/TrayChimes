@@ -7,12 +7,11 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_TRAYCHIMES_DIALOG           102
 #define IDR_MAINFRAME                   128
-#define IDI_TRAY_CLOCK                  129
 #define IDR_TRAY_CONTEXT                130
-#define IDB_REGULATOR                   132
 #define IDD_MESSAGE                     133
 #define IDD_DISPLAY_MESSAGE             134
 #define IDI_SPEAKER                     137
+#define IDB_REGULATOR_PNG               138
 #define IDC_CHIME_HOUR                  1000
 #define IDC_CHIME_COUNT                 1001
 #define IDC_CHIME_15                    1002
@@ -43,6 +42,7 @@
 #define IDC_EDIT_MESSAGE                1030
 #define IDC_MESSAGE                     1031
 #define IDC_SNOOZE                      1032
+#define IDC_REGULATOR                   1033
 #define ID_POPUP_PROPERTIES             32771
 #define ID_POPUP_ABOUT                  32772
 #define ID_POPUP_EXIT                   32773
@@ -51,9 +51,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        138
+#define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1033
+#define _APS_NEXT_CONTROL_VALUE         1034
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

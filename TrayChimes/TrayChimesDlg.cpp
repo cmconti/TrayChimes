@@ -24,6 +24,51 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_REGULATOR, m_staticImage);
+}
+
+//https://stackoverflow.com/questions/2770855/how-do-you-scale-a-cbitmap-object
+void ResizeBitmap(CBitmap& bmp_src, CBitmap& bmp_dst, int dstW, int dstH)
+{
+    BITMAP bm = { 0 };
+    bmp_src.GetBitmap(&bm);
+    auto size = CSize(bm.bmWidth, bm.bmHeight);
+    CWindowDC wndDC(NULL);
+    CDC srcDC;
+    srcDC.CreateCompatibleDC(&wndDC);
+    auto oldSrcBmp = srcDC.SelectObject(&bmp_src);
+
+    CDC destDC;
+    destDC.CreateCompatibleDC(&wndDC);
+    bmp_dst.CreateCompatibleBitmap(&wndDC, dstW, dstH);
+    auto oldDestBmp = destDC.SelectObject(&bmp_dst);
+
+    destDC.StretchBlt(0, 0, dstW, dstH, &srcDC, 0, 0, size.cx, size.cy, SRCCOPY);
+}
+
+BOOL CAboutDlg::OnInitDialog()
+{
+    CDialogEx::OnInitDialog();
+
+    VERIFY(m_RegulatorImg.Load(IDB_REGULATOR_PNG));
+
+    BITMAP bm = { 0 };
+    m_RegulatorImg.GetBitmap(&bm);
+    auto imgSize = CSize(bm.bmWidth, bm.bmHeight);
+
+    //CRect clientRect;
+    //m_staticImage.GetClientRect(&clientRect);
+
+    //auto ctrlHeight = clientRect.Height();
+    auto ctrlHeight = 120;
+
+    auto imgAspectRatio = (double)imgSize.cx / (double)imgSize.cy;
+
+    CBitmap resizedImg;
+    ResizeBitmap(m_RegulatorImg, resizedImg, (int)((double)ctrlHeight * imgAspectRatio), ctrlHeight);
+    m_staticImage.SetBitmap(resizedImg);
+
+    return FALSE;
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
@@ -66,7 +111,7 @@ CTrayChimesDlg::CTrayChimesDlg(CWnd* pParent /*=nullptr*/)
     m_bAlarmPlayed = FALSE;
 
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-    m_hTrayIcon = AfxGetApp()->LoadIcon(IDI_TRAY_CLOCK);
+    m_hTrayIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
     m_hIconSpeaker = (HICON)::LoadImage(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_SPEAKER),
         IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
