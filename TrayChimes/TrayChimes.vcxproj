@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\TrayChimes.rc2" />
+    <None Include="Setup\TrayChimesSetup.iss" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\AudioPlayback.ico" />
@@ -233,6 +234,5 @@
     </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
