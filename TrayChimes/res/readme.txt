@@ -12,11 +12,10 @@ just right click or double click the TrayChimes icon in the system tray
 to display the configuration dialog.  You can terminate the program by
 right clicking the icon and selecting Exit.
 
-If you have any problems, questions or comments, feel free to write
-to me at cmconti@aol.com
+Chris Conti
 
 Release Info:
-1.0 	24 October, 96
+1.0     24 October, 96
         1.  Initial Version
 
 1.1     20 March, 97
@@ -38,7 +37,6 @@ Release Info:
         1.  Changed speaker buttons to use an icon instead of a bitmap so they display correctly
             when the user has altered the 3-d object color.
         2.  Fixed problem where tabbing around the controls would get stuck in the time edit box.
-            TODO: Find a way to let all of the time fields be edited from the keyboard.
         3.  Setup image: replaced the default alarm wave file with a generic alarm sound.
         4.  Stopped multiple alarm dialogs from appearing which could happen if the computer were
             left running unattended for several days.
@@ -48,6 +46,21 @@ Release Info:
             w/shell update or Win98/Win200 (or later) to work ).
         2.  Recompiled with VC6 to reduce exe size.
 
+1.30   27 February, 23
+        1.  Rebuilt program using VisualStudio 2022
+        2.  Rebuilt installer using Inno Setup
+        3.  Updated icons and graphics
+        4.  Added option to run on startup
+        5.  Use common time picker control
+        6.  Targeted Windows 10 SDK
+
+TODO:
+        1.  Add silent hours for chimes
+        2.  Add mute (also cancel any currently playing chimes/alarms)
+        3.  Modernize UI
+        4.  Stop program on uninstall
+        5.  Better alarm controls/granularity (e.g. weekday only, multiple alarms, etc.)
+        6.  Replace wav files with ones I am certain are free to use since I don't know where the current ones came from 25 years ago.*sigh*
 
 Attributions:
 - Clock Image by VectorPortal.com
