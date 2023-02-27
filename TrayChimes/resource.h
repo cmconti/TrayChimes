@@ -43,6 +43,8 @@
 #define IDC_MESSAGE                     1031
 #define IDC_SNOOZE                      1032
 #define IDC_REGULATOR                   1033
+#define IDC_RUN_ON_STARTUP              1034
+#define ID_CLOSE                        1035
 #define ID_POPUP_PROPERTIES             32771
 #define ID_POPUP_ABOUT                  32772
 #define ID_POPUP_EXIT                   32773
@@ -53,7 +55,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1034
+#define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

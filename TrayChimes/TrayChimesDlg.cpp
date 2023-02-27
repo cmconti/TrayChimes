@@ -99,6 +99,7 @@ CTrayChimesDlg::CTrayChimesDlg(CWnd* pParent /*=nullptr*/)
     m_bAlarmSet = FALSE;
     m_bDisplayMessage = FALSE;
     m_bPlayAlarmOnce = FALSE;
+    m_bRunOnStartup = FALSE;
 
     m_uTrayID = IDR_TRAY_CONTEXT;
     m_AccessRegistry = TRUE;
@@ -141,6 +142,14 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
         m_str00Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime00", L"Westminster.wav");
         m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"HourChime.wav");
         m_strAlarmChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"AlarmChime", L"Alarm.wav");
+
+        m_bRunOnStartup = FALSE;
+        CRegKey keyHKCURun;
+        if (ERROR_SUCCESS == keyHKCURun.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"))
+        {
+            ULONG nChars = 0;
+            m_bRunOnStartup = (ERROR_MORE_DATA == keyHKCURun.QueryStringValue(L"TrayChimes", NULL, &nChars));
+        }
     }
 
     CDialogEx::DoDataExchange(pDX);
@@ -165,6 +174,7 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Check(pDX, IDC_DISPLAY_MESSAGE, m_bDisplayMessage);
     DDX_Check(pDX, IDC_ALARM_ONCE, m_bPlayAlarmOnce);
     DDX_Control(pDX, IDC_TIME_EDIT, m_TimeSelection);
+    DDX_Check(pDX, IDC_RUN_ON_STARTUP, m_bRunOnStartup);
 
     if (!pDX->m_bSaveAndValidate)
     {
@@ -210,6 +220,25 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
         AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime00", m_str00Chime);
         AfxGetApp()->WriteProfileString(L"ChimeSounds", L"ChimeHour", m_strHourChime);
         AfxGetApp()->WriteProfileString(L"ChimeSounds", L"AlarmChime", m_strAlarmChime);
+
+        CRegKey keyHKCURun;
+        if (ERROR_SUCCESS == keyHKCURun.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"))
+        {
+            if (m_bRunOnStartup)
+            {
+                HMODULE hmod = GetModuleHandle(NULL);
+
+                CString fullPath;
+                DWORD pathLen = ::GetModuleFileName(hmod, fullPath.GetBufferSetLength(MAX_PATH + 1), MAX_PATH); // hmod of zero gets the main EXE
+                fullPath.ReleaseBuffer(pathLen);
+
+                keyHKCURun.SetStringValue(L"TrayChimes", fullPath);
+            }
+            else
+            {
+                keyHKCURun.DeleteValue(L"TrayChimes");
+            }
+        }
     }
 }
 
@@ -241,6 +270,7 @@ BEGIN_MESSAGE_MAP(CTrayChimesDlg, CDialogEx)
     ON_COMMAND(ID_POPUP_PROPERTIES, OnPopupProperties)
     ON_MESSAGE(WM_PSADDTOTRAY, OnAddToTray)
     ON_REGISTERED_MESSAGE(WM_TASKBARCREATED, OnTaskBarCreated)
+    ON_BN_CLICKED(ID_CLOSE, &CTrayChimesDlg::OnClose)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -332,8 +362,8 @@ BOOL CTrayChimesDlg::OnInitDialog()
 
     // Set the icon for this dialog.  The framework does this automatically
     //  when the application's main window is not a dialog
-    SetIcon(m_hIcon, TRUE);			// Set big icon
-    SetIcon(m_hIcon, FALSE);		// Set small icon
+    SetIcon(m_hIcon, TRUE);   // Set big icon
+    SetIcon(m_hIcon, FALSE);  // Set small icon
 
     m_btnPlay00.SetIcon(m_hIconSpeaker);
     m_btnPlay15.SetIcon(m_hIconSpeaker);
@@ -690,13 +720,16 @@ void CTrayChimesDlg::OnOK()
     ShowWindow(SW_HIDE);
 }
 
-void CTrayChimesDlg::OnCancel()
+void CTrayChimesDlg::OnClose()
 {
     UpdateData(FALSE);
     ShowWindow(SW_HIDE);
-#ifdef DEBUG
+}
+
+void CTrayChimesDlg::OnCancel()
+{
+    UpdateData(FALSE);
     CDialogEx::OnCancel();
-#endif
 }
 
 //////////////////

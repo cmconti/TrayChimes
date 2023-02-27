@@ -35,40 +35,41 @@ class CTrayChimesDlg : public CDialogEx
 {
     // Construction
 public:
-    CTrayChimesDlg(CWnd* pParent = nullptr);	// standard constructor
+    CTrayChimesDlg(CWnd* pParent = nullptr); // standard constructor
 
     // Dialog Data
 #ifdef AFX_DESIGN_TIME
     enum { IDD = IDD_TRAYCHIMES_DIALOG };
 #endif
 
-    CButton	m_btnPlayAlarm;
-    CButton	m_btnPlayHour;
-    CButton	m_btnPlay45;
-    CButton	m_btnPlay30;
-    CButton	m_btnPlay15;
-    CButton	m_btnPlay00;
-    BOOL	m_bChimeAt15;
-    BOOL	m_bChimeAt30;
-    BOOL	m_bChimeAt45;
-    BOOL	m_bChimeHourCount;
-    BOOL	m_bChimeAt00;
-    CString	m_str15Chime;
-    CString	m_str30Chime;
-    CString	m_str45Chime;
-    CString	m_str00Chime;
-    CString	m_strHourChime;
-    CString	m_strAlarmChime;
-    BOOL	m_bAlarmSet;
-    BOOL	m_bDisplayMessage;
-    BOOL	m_bPlayAlarmOnce;
+    BOOL m_bRunOnStartup;
+    CButton m_btnPlayAlarm;
+    CButton m_btnPlayHour;
+    CButton m_btnPlay45;
+    CButton m_btnPlay30;
+    CButton m_btnPlay15;
+    CButton m_btnPlay00;
+    BOOL m_bChimeAt15;
+    BOOL m_bChimeAt30;
+    BOOL m_bChimeAt45;
+    BOOL m_bChimeHourCount;
+    BOOL m_bChimeAt00;
+    CString m_str15Chime;
+    CString m_str30Chime;
+    CString m_str45Chime;
+    CString m_str00Chime;
+    CString m_strHourChime;
+    CString m_strAlarmChime;
+    BOOL m_bAlarmSet;
+    BOOL m_bDisplayMessage;
+    BOOL m_bPlayAlarmOnce;
 
     CString m_Message;
 
     void Snooze();
 
 protected:
-    virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+    virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
 
     // Implementation
 protected:
@@ -116,6 +117,7 @@ protected:
     afx_msg HCURSOR OnQueryDragIcon();
     afx_msg void OnTimer(UINT nIDEvent);
     virtual void OnOK();
+    afx_msg void OnClose();
     virtual void OnCancel();
     afx_msg void OnTimeChange();
     afx_msg void OnPlay00();
