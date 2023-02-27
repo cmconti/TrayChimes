@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TrayChimes"
-#define MyAppVersion "1.22"
+#define MyAppVersion "1.30"
 #define MyAppPublisher "PretzelSoft"
 #define MyAppURL "https://github.com/cmconti/TrayChimes"
 #define MyAppExeName "TrayChimes.exe"
@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\{#MyAppName}
+DefaultDirName={autopf}\{#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
@@ -29,7 +29,7 @@ SetupIconFile=C:\github-personal\TrayChimes\TrayChimes\res\RegulatorFace.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-UninstallDisplayIcon={app}\{#MyAppExeName},1
+UninstallDisplayIcon={app}\{#MyAppExeName},0
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
