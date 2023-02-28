@@ -61,6 +61,7 @@ TODO:
         4.  Stop program on uninstall
         5.  Better alarm controls/granularity (e.g. weekday only, multiple alarms, etc.)
         6.  Replace wav files with ones I am certain are free to use since I don't know where the current ones came from 25 years ago.*sigh*
+        7.  Better icons and graphics
 
 Attributions:
 - Clock Image by VectorPortal.com

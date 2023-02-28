@@ -40,7 +40,7 @@ BOOL CTrayChimesApp::InitInstance()
         PAGE_READWRITE,      // read/write access
         0,                   // size: high 32-bits
         sizeof(HWND),           // size: low 32-bits
-        L"myuniquename");    // name of map object
+        L"TrayChimesHWND");    // name of map object
 
     if (m_hMapObject == NULL)
         return FALSE;
