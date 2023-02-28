@@ -23,9 +23,9 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=C:\github-personal\TrayChimes\Setup
+OutputDir=..\Setup\{#Config}
 OutputBaseFilename=TrayChimesSetup
-SetupIconFile=C:\github-personal\TrayChimes\TrayChimes\res\RegulatorFace.ico
+SetupIconFile=..\TrayChimes\res\RegulatorFace.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -35,11 +35,11 @@ UninstallDisplayIcon={app}\{#MyAppExeName},0
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "C:\github-personal\TrayChimes\Debug\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\github-personal\TrayChimes\Debug\Alarm.wav"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\github-personal\TrayChimes\Debug\HourChime.wav"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\github-personal\TrayChimes\Debug\readme.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\github-personal\TrayChimes\Debug\Westminster.wav"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\{#Config}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\{#Config}\Alarm.wav"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\{#Config}\HourChime.wav"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\{#Config}\readme.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\{#Config}\Westminster.wav"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
