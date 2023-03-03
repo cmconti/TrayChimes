@@ -149,7 +149,7 @@ void CTrayChimesDlg::LoadDataFromRegistry()
     if (ERROR_SUCCESS == keyHKCURun.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"))
     {
         ULONG nChars = 0;
-        m_bRunOnStartup = (ERROR_MORE_DATA == keyHKCURun.QueryStringValue(L"TrayChimes", NULL, &nChars));
+        m_bRunOnStartup = (ERROR_SUCCESS == keyHKCURun.QueryStringValue(L"TrayChimes", NULL, &nChars));
     }
 }
 
