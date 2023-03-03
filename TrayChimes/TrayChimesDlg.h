@@ -42,31 +42,44 @@ public:
     enum { IDD = IDD_TRAYCHIMES_DIALOG };
 #endif
 
-    BOOL m_bRunOnStartup;
+    void Snooze();
+
+private:
     CButton m_btnPlayAlarm;
     CButton m_btnPlayHour;
     CButton m_btnPlay45;
     CButton m_btnPlay30;
     CButton m_btnPlay15;
     CButton m_btnPlay00;
-    BOOL m_bChimeAt15;
-    BOOL m_bChimeAt30;
-    BOOL m_bChimeAt45;
-    BOOL m_bChimeHourCount;
+    CDateTimeCtrl m_TimeSelection;
+
     BOOL m_bChimeAt00;
-    CString m_str15Chime;
-    CString m_str30Chime;
-    CString m_str45Chime;
     CString m_str00Chime;
+
+    BOOL m_bChimeHourCount;
     CString m_strHourChime;
-    CString m_strAlarmChime;
+
+    BOOL m_bChimeAt15;
+    CString m_str15Chime;
+
+    BOOL m_bChimeAt30;
+    CString m_str30Chime;
+
+    BOOL m_bChimeAt45;
+    CString m_str45Chime;
+
     BOOL m_bAlarmSet;
-    BOOL m_bDisplayMessage;
+    CString m_strAlarmChime;
+    COleDateTime m_timeAlarm;
     BOOL m_bPlayAlarmOnce;
 
+    BOOL m_bDisplayMessage;
     CString m_Message;
 
-    void Snooze();
+    BOOL m_bRunOnStartup;
+
+    void LoadDataFromRegistry();
+    void SaveDataToRegistry();
 
 protected:
     virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
@@ -81,17 +94,12 @@ protected:
     int m_nTimerID;
     UINT m_uTrayID;
 
-    BOOL m_AccessRegistry;
     BOOL m_bAllowShowWindow;
 
     CAboutDlg m_dlgAbout;
-    CDateTimeCtrl m_TimeSelection;
-
-    CAlarmDlg m_AlarmDlg;
+    CAlarmDlg m_dlgAlarm;
 
     CTime m_tNextChime;
-    int m_nAlarmHour;
-    int m_nAlarmMinute;
     int m_nActualAlarmHour;     //in case snooze was pressed
     int m_nActualAlarmMinute;   //in case snooze was pressed
     BOOL m_bAlarmPlayed;

@@ -1,4 +1,4 @@
-TrayChimes v1.22
+TrayChimes v1.30
 
 written by Chris Conti
 
@@ -42,8 +42,8 @@ Release Info:
             left running unattended for several days.
 
 1.22   23 February, 00
-        1.  Fixed problem of tray icon disappearing when explorer restarts (n.b. requires IE4
-            w/shell update or Win98/Win200 (or later) to work ).
+        1.  Fixed problem of tray icon disappearing when explorer restarts (n.b. requires IE4 w/shell
+            update or Win98/Win200 (or later) to work ).
         2.  Recompiled with VC6 to reduce exe size.
 
 1.30   27 February, 23
@@ -53,6 +53,7 @@ Release Info:
         4.  Added option to run on startup
         5.  Use common time picker control
         6.  Targeted Windows 10 SDK
+        7.  Clean up loading and saving data
 
 TODO:
         1.  Add silent hours for chimes
@@ -60,11 +61,14 @@ TODO:
         3.  Modernize UI
         4.  Stop program on uninstall
         5.  Better alarm controls/granularity (e.g. weekday only, multiple alarms, etc.)
-        6.  Replace wav files with ones I am certain are free to use since I don't know where the current ones came from 25 years ago.*sigh*
+        6.  Replace wav files with ones I am certain are free to use since I don't know where the
+            current ones came from 25 years ago.*sigh*
         7.  Better icons and graphics
+        8.  Fix snooze with 'play alarm once'
+        9.  Github actions
 
 Attributions:
 - Clock Image by VectorPortal.com
-  - <a href=" https://www.vectorportal.com" >Vectorportal.com</a>,  <a class="external text" href="https://creativecommons.org/licenses/by/4.0/" >CC BY</a>
+  - https://www.vectorportal.com",  CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
 - Speaker Image by Microsoft from the Visual Studio Image library.
   - https://learn.microsoft.com/en-us/visualstudio/designers/the-visual-studio-image-library?view=vs-2022

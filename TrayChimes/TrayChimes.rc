@@ -89,12 +89,9 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_REGULATOR,"Static",SS_BITMAP | SS_REALSIZEIMAGE,7,7,15,13
     LTEXT           "TrayChimes Version 1.30",IDC_STATIC,70,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright Christopher Conti © 2023",IDC_STATIC,70,25,170,8
+    LTEXT           "Copyright Chris Conti © 2023",IDC_STATIC,70,26,170,8
     DEFPUSHBUTTON   "OK",IDOK,208,7,32,14,WS_GROUP
-    LTEXT           "Written by Christopher Conti",IDC_STATIC,70,52,170,8
-    LTEXT           "cmconti@aol.com",IDC_STATIC,70,61,170,8
-    LTEXT           "PretzelSoft",IDC_STATIC,70,34,170,8
-    LTEXT           "Freeware",IDC_STATIC,70,43,170,8
+    LTEXT           "https://github.com/cmconti/TrayChimes",IDC_STATIC,70,42,170,8
 END
 
 IDD_TRAYCHIMES_DIALOG DIALOGEX 0, 0, 383, 269

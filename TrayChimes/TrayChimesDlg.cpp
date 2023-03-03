@@ -78,12 +78,13 @@ END_MESSAGE_MAP()
 // CTrayChimesDlg dialog
 
 CTrayChimesDlg::CTrayChimesDlg(CWnd* pParent /*=nullptr*/)
-    : CDialogEx(IDD_TRAYCHIMES_DIALOG, pParent),
-    m_tspan15(0, 0, 15, 0),
-    m_tspan30(0, 0, 30, 0),
-    m_tspan45(0, 0, 45, 0),
-    m_tspan00(0, 1, 0, 0),
-    m_tspan24Hours(1, 0, 0, 0)
+    : CDialogEx(IDD_TRAYCHIMES_DIALOG, pParent)
+    , m_tspan15(0, 0, 15, 0)
+    , m_tspan30(0, 0, 30, 0)
+    , m_tspan45(0, 0, 45, 0)
+    , m_tspan00(0, 1, 0, 0)
+    , m_tspan24Hours(1, 0, 0, 0)
+    , m_timeAlarm(COleDateTime::GetCurrentTime())
 {
     m_bChimeAt15 = TRUE;
     m_bChimeAt30 = TRUE;
@@ -102,13 +103,13 @@ CTrayChimesDlg::CTrayChimesDlg(CWnd* pParent /*=nullptr*/)
     m_bRunOnStartup = FALSE;
 
     m_uTrayID = IDR_TRAY_CONTEXT;
-    m_AccessRegistry = TRUE;
     m_bAllowShowWindow = TRUE;
 
     SetNextChime();
     TRACE(L"reset Alarm 1\n");
-    m_nActualAlarmHour = m_nAlarmHour = CTime::GetCurrentTime().GetHour();
-    m_nActualAlarmMinute = m_nAlarmMinute = CTime::GetCurrentTime().GetMinute();
+    int nAlarmHour = m_nActualAlarmHour = CTime::GetCurrentTime().GetHour();
+    int nAlarmMinute = m_nActualAlarmMinute = CTime::GetCurrentTime().GetMinute();
+    m_timeAlarm.SetTime(m_nActualAlarmHour, m_nActualAlarmMinute, 0);
     m_bAlarmPlayed = FALSE;
 
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -118,40 +119,84 @@ CTrayChimesDlg::CTrayChimesDlg(CWnd* pParent /*=nullptr*/)
         IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
 }
 
-void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
+void CTrayChimesDlg::LoadDataFromRegistry()
 {
-    if (!pDX->m_bSaveAndValidate && m_AccessRegistry)  //retrieving
+    m_bChimeAt15 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime15", TRUE);
+    m_bChimeAt30 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime30", TRUE);
+    m_bChimeAt45 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime45", TRUE);
+    m_bChimeAt00 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime00", TRUE);
+    m_bChimeHourCount = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"ChimeHour", TRUE);
+    m_bAlarmSet = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"AlarmSet", FALSE);
+
+    TRACE(L"reset Alarm 2\n");
+    int nAlarmHour = m_nActualAlarmHour = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"AlarmHour", 12);
+    int nAlarmMinute = m_nActualAlarmMinute = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"AlarmMinute", 0);
+    m_timeAlarm.SetTime(m_nActualAlarmHour, m_nActualAlarmMinute, 0);
+
+    m_Message = AfxGetApp()->GetProfileString(L"ChimeSelection", L"Message", L"");
+    m_bDisplayMessage = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"DisplayMessage", FALSE);
+    m_bPlayAlarmOnce = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"PlayAlarmOnce", FALSE);
+
+    m_str15Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime15", L"HourChime.wav");
+    m_str30Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime30", L"HourChime.wav");
+    m_str45Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime45", L"HourChime.wav");
+    m_str00Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime00", L"Westminster.wav");
+    m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"HourChime.wav");
+    m_strAlarmChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"AlarmChime", L"Alarm.wav");
+
+    m_bRunOnStartup = FALSE;
+    CRegKey keyHKCURun;
+    if (ERROR_SUCCESS == keyHKCURun.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"))
     {
-        m_bChimeAt15 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime15", TRUE);
-        m_bChimeAt30 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime30", TRUE);
-        m_bChimeAt45 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime45", TRUE);
-        m_bChimeAt00 = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"Chime00", TRUE);
-        m_bChimeHourCount = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"ChimeHour", TRUE);
-        m_bAlarmSet = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"AlarmSet", FALSE);
-        TRACE(L"reset Alarm 2\n");
-        m_nActualAlarmHour = m_nAlarmHour = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"AlarmHour", 12);
-        m_nActualAlarmMinute = m_nAlarmMinute = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"AlarmMinute", 0);
+        ULONG nChars = 0;
+        m_bRunOnStartup = (ERROR_MORE_DATA == keyHKCURun.QueryStringValue(L"TrayChimes", NULL, &nChars));
+    }
+}
 
-        m_Message = AfxGetApp()->GetProfileString(L"ChimeSelection", L"Message", L"");
-        m_bDisplayMessage = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"DisplayMessage", FALSE);
-        m_bPlayAlarmOnce = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"PlayAlarmOnce", FALSE);
+void CTrayChimesDlg::SaveDataToRegistry()
+{
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime15", m_bChimeAt15);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime30", m_bChimeAt30);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime45", m_bChimeAt45);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime00", m_bChimeAt00);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"ChimeHour", m_bChimeHourCount);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"AlarmSet", m_bAlarmSet);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"AlarmHour", m_timeAlarm.GetHour());
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"AlarmMinute", m_timeAlarm.GetMinute());
 
-        m_str15Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime15", L"HourChime.wav");
-        m_str30Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime30", L"HourChime.wav");
-        m_str45Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime45", L"HourChime.wav");
-        m_str00Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime00", L"Westminster.wav");
-        m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"HourChime.wav");
-        m_strAlarmChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"AlarmChime", L"Alarm.wav");
+    AfxGetApp()->WriteProfileString(L"ChimeSelection", L"Message", m_Message);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"DisplayMessage", m_bDisplayMessage);
+    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"PlayAlarmOnce", m_bPlayAlarmOnce);
 
-        m_bRunOnStartup = FALSE;
-        CRegKey keyHKCURun;
-        if (ERROR_SUCCESS == keyHKCURun.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"))
+    AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime15", m_str15Chime);
+    AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime30", m_str30Chime);
+    AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime45", m_str45Chime);
+    AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime00", m_str00Chime);
+    AfxGetApp()->WriteProfileString(L"ChimeSounds", L"ChimeHour", m_strHourChime);
+    AfxGetApp()->WriteProfileString(L"ChimeSounds", L"AlarmChime", m_strAlarmChime);
+
+    CRegKey keyHKCURun;
+    if (ERROR_SUCCESS == keyHKCURun.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"))
+    {
+        if (m_bRunOnStartup)
         {
-            ULONG nChars = 0;
-            m_bRunOnStartup = (ERROR_MORE_DATA == keyHKCURun.QueryStringValue(L"TrayChimes", NULL, &nChars));
+            HMODULE hmod = GetModuleHandle(NULL);
+
+            CString fullPath;
+            DWORD pathLen = ::GetModuleFileName(hmod, fullPath.GetBufferSetLength(MAX_PATH + 1), MAX_PATH); // hmod of zero gets the main EXE
+            fullPath.ReleaseBuffer(pathLen);
+
+            keyHKCURun.SetStringValue(L"TrayChimes", fullPath);
+        }
+        else
+        {
+            keyHKCURun.DeleteValue(L"TrayChimes");
         }
     }
+}
 
+void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
+{
     CDialogEx::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_PLAY_ALARM, m_btnPlayAlarm);
     DDX_Control(pDX, IDC_PLAY_HOUR, m_btnPlayHour);
@@ -175,13 +220,7 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Check(pDX, IDC_ALARM_ONCE, m_bPlayAlarmOnce);
     DDX_Control(pDX, IDC_TIME_EDIT, m_TimeSelection);
     DDX_Check(pDX, IDC_RUN_ON_STARTUP, m_bRunOnStartup);
-
-    if (!pDX->m_bSaveAndValidate)
-    {
-        //set alarm time in control
-        CTime time(2005, 1, 1, m_nAlarmHour, m_nAlarmMinute, 0);
-        m_TimeSelection.SetTime(&time);
-    }
+    DDX_DateTimeCtrl(pDX, IDC_TIME_EDIT, m_timeAlarm);
 
     if (pDX->m_bSaveAndValidate)
     {
@@ -189,55 +228,13 @@ void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
         m_TimeSelection.GetTime(time);
 
         //get alarm time from control
-        if ((m_nAlarmMinute != time.GetMinute()) || (m_nAlarmHour != time.GetHour()))
+        if ((m_timeAlarm.GetMinute() != time.GetMinute()) || m_timeAlarm.GetHour() != time.GetHour())
         {
             //alarm has changed, so reset snooze
             TRACE(L"reset Alarm 3\n");
-            m_nActualAlarmHour = m_nAlarmHour = time.GetHour();
-            m_nActualAlarmMinute = m_nAlarmMinute = time.GetMinute();
+            m_nActualAlarmHour = time.GetHour();
+            m_nActualAlarmMinute = time.GetMinute();
             SetTipText();
-        }
-    }
-
-    if (pDX->m_bSaveAndValidate && m_AccessRegistry)  //storing
-    {
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime15", m_bChimeAt15);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime30", m_bChimeAt30);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime45", m_bChimeAt45);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"Chime00", m_bChimeAt00);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"ChimeHour", m_bChimeHourCount);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"AlarmSet", m_bAlarmSet);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"AlarmHour", m_nAlarmHour);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"AlarmMinute", m_nAlarmMinute);
-
-        AfxGetApp()->WriteProfileString(L"ChimeSelection", L"Message", m_Message);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"DisplayMessage", m_bDisplayMessage);
-        AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"PlayAlarmOnce", m_bPlayAlarmOnce);
-
-        AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime15", m_str15Chime);
-        AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime30", m_str30Chime);
-        AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime45", m_str45Chime);
-        AfxGetApp()->WriteProfileString(L"ChimeSounds", L"Chime00", m_str00Chime);
-        AfxGetApp()->WriteProfileString(L"ChimeSounds", L"ChimeHour", m_strHourChime);
-        AfxGetApp()->WriteProfileString(L"ChimeSounds", L"AlarmChime", m_strAlarmChime);
-
-        CRegKey keyHKCURun;
-        if (ERROR_SUCCESS == keyHKCURun.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"))
-        {
-            if (m_bRunOnStartup)
-            {
-                HMODULE hmod = GetModuleHandle(NULL);
-
-                CString fullPath;
-                DWORD pathLen = ::GetModuleFileName(hmod, fullPath.GetBufferSetLength(MAX_PATH + 1), MAX_PATH); // hmod of zero gets the main EXE
-                fullPath.ReleaseBuffer(pathLen);
-
-                keyHKCURun.SetStringValue(L"TrayChimes", fullPath);
-            }
-            else
-            {
-                keyHKCURun.DeleteValue(L"TrayChimes");
-            }
         }
     }
 }
@@ -337,6 +334,8 @@ BOOL CTrayChimesDlg::TrayTip(DWORD dwMessage, UINT uID, PTSTR pszTip)
 BOOL CTrayChimesDlg::OnInitDialog()
 {
     ((CTrayChimesApp*)AfxGetApp())->SetSharedHWND(m_hWnd);
+
+    LoadDataFromRegistry();
 
     CDialogEx::OnInitDialog();
 
@@ -478,14 +477,14 @@ void CTrayChimesDlg::OnTimer(UINT nIDEvent)
                 m_bAlarmPlayed = TRUE;
                 ::sndPlaySound(m_strAlarmChime, SND_ASYNC);
 
-                if ((!::IsWindow(m_AlarmDlg.GetSafeHwnd())) && m_bDisplayMessage)
+                if ((!::IsWindow(m_dlgAlarm.GetSafeHwnd())) && m_bDisplayMessage)
                 {
-                    m_AlarmDlg.m_strMessage = m_Message;
-                    AfxBeginThread(&AlarmDialogThread, (LPVOID)(&m_AlarmDlg));
+                    m_dlgAlarm.m_strMessage = m_Message;
+                    AfxBeginThread(&AlarmDialogThread, (LPVOID)(&m_dlgAlarm));
                 }
                 else if (m_bDisplayMessage)
                 {
-                    m_AlarmDlg.BringWindowToTop();
+                    m_dlgAlarm.BringWindowToTop();
                 }
 
                 if (m_bPlayAlarmOnce)
@@ -494,15 +493,15 @@ void CTrayChimesDlg::OnTimer(UINT nIDEvent)
                     CButton* pCheck = (CButton*)GetDlgItem(IDC_ALARM_SET);
                     if (pCheck != NULL)
                     {
-                        pCheck->SetCheck(FALSE);    //turn off check because DDX will reset variable
+                        pCheck->SetCheck(FALSE);
                     }
-                    m_AccessRegistry = TRUE;
-                    UpdateData(TRUE);
+                    AfxGetApp()->WriteProfileInt(L"ChimeSelection", L"AlarmSet", m_bAlarmSet);
                 }
+
                 //reset m_nActualAlarmHour and m_nActualAlarmMinute;
                 TRACE(L"reset Alarm 5\n");
-                m_nActualAlarmHour = m_nAlarmHour;
-                m_nActualAlarmMinute = m_nAlarmMinute;
+                m_nActualAlarmHour = m_timeAlarm.GetHour();
+                m_nActualAlarmMinute = m_timeAlarm.GetMinute();
                 SetTipText();
             }
         }
@@ -717,15 +716,20 @@ void CTrayChimesDlg::PlayNextChime()
 void CTrayChimesDlg::OnOK()
 {
     UpdateData();
+    SaveDataToRegistry();
+    SetNextChime();
+    SetTipText();
     ShowWindow(SW_HIDE);
 }
 
+//The cancel button
 void CTrayChimesDlg::OnClose()
 {
     UpdateData(FALSE);
     ShowWindow(SW_HIDE);
 }
 
+//The exit button
 void CTrayChimesDlg::OnCancel()
 {
     UpdateData(FALSE);
@@ -778,7 +782,9 @@ LRESULT CTrayChimesDlg::OnTrayNotification(WPARAM uID, LPARAM lEvent)
         ::TrackPopupMenu(pSubMenu->m_hMenu, 0, mouse.x, mouse.y, 0, m_hWnd, NULL);
     }
     else  // double click: execute first menu item
+    {
         ::SendMessage(m_hWnd, WM_COMMAND, pSubMenu->GetMenuItemID(0), 0);
+    }
 
     return 1; // handled
 }
@@ -812,6 +818,7 @@ void CTrayChimesDlg::OnPopupExit()
 void CTrayChimesDlg::OnPopupProperties()
 {
     m_bAllowShowWindow = TRUE; //reset value
+    UpdateData(FALSE);
     ShowWindow(SW_SHOW);
     SetForegroundWindow();
 }
@@ -861,9 +868,6 @@ void CTrayChimesDlg::On15Browse()
     if (dlg.DoModal() == IDOK)
     {
         m_str15Chime = dlg.GetPathName();
-        m_AccessRegistry = FALSE;
-        UpdateData(FALSE);
-        m_AccessRegistry = TRUE;
     }
 }
 
@@ -874,9 +878,6 @@ void CTrayChimesDlg::On30Browse()
     if (dlg.DoModal() == IDOK)
     {
         m_str30Chime = dlg.GetPathName();
-        m_AccessRegistry = FALSE;
-        UpdateData(FALSE);
-        m_AccessRegistry = TRUE;
     }
 }
 
@@ -887,9 +888,6 @@ void CTrayChimesDlg::On45Browse()
     if (dlg.DoModal() == IDOK)
     {
         m_str45Chime = dlg.GetPathName();
-        m_AccessRegistry = FALSE;
-        UpdateData(FALSE);
-        m_AccessRegistry = TRUE;
     }
 }
 
@@ -900,9 +898,6 @@ void CTrayChimesDlg::OnBongBrowse()
     if (dlg.DoModal() == IDOK)
     {
         m_strHourChime = dlg.GetPathName();
-        m_AccessRegistry = FALSE;
-        UpdateData(FALSE);
-        m_AccessRegistry = TRUE;
     }
 }
 
@@ -913,9 +908,6 @@ void CTrayChimesDlg::OnHourBrowse()
     if (dlg.DoModal() == IDOK)
     {
         m_str00Chime = dlg.GetPathName();
-        m_AccessRegistry = FALSE;
-        UpdateData(FALSE);
-        m_AccessRegistry = TRUE;
     }
 }
 
@@ -926,9 +918,6 @@ void CTrayChimesDlg::OnAlarmBrowse()
     if (dlg.DoModal() == IDOK)
     {
         m_strAlarmChime = dlg.GetPathName();
-        m_AccessRegistry = FALSE;
-        UpdateData(FALSE);
-        m_AccessRegistry = TRUE;
     }
 }
 
