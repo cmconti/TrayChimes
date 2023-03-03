@@ -68,7 +68,8 @@ TODO:
         9.  Github actions
 
 Attributions:
-- Clock Image by VectorPortal.com
-  - https://www.vectorportal.com",  CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+- Clock Image by Icon-Icons
+  - https://icon-icons.com/icon/clock-time-furniture/209725
+  - https://icon-icons.com/license
 - Speaker Image by Microsoft from the Visual Studio Image library.
   - https://learn.microsoft.com/en-us/visualstudio/designers/the-visual-studio-image-library?view=vs-2022
