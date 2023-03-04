@@ -123,7 +123,8 @@ protected:
     void PlayNextChime();
     void SetTipText(BOOL bAdd = FALSE);
 
-    void PreviewSound(CEdit& editControl);
+    void PlayAudio(CEdit& editControl, bool bAsync = true);
+    void PlayAudio(CString& audioFile, bool bAsync = true);
     void BrowseForSound(CEdit& editControl);
 
     // Generated message map functions
@@ -157,5 +158,6 @@ protected:
     afx_msg void OnPopupExit();
     afx_msg void OnPopupProperties();
     afx_msg LRESULT OnAddToTray(WPARAM wParam, LPARAM lParam);
+    afx_msg LRESULT OnMciNotify(WPARAM wParam, LPARAM lParam);
     DECLARE_MESSAGE_MAP();
 };

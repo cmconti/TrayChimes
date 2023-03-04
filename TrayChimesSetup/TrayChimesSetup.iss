@@ -39,7 +39,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "..\{#Config}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\{#Config}\Alarm.wav"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\{#Config}\HourChime.wav"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\{#Config}\HourChime.mp3"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\{#Config}\readme.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\{#Config}\Westminster.wav"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

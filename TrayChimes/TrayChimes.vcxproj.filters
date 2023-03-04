@@ -83,7 +83,7 @@
     <CopyFileToFolders Include="res\Alarm.wav">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="res\HourChime.wav">
+    <CopyFileToFolders Include="res\HourChime.mp3">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="res\Westminster.wav">

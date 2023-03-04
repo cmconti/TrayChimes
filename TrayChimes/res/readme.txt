@@ -54,7 +54,8 @@ Release Info:
         5.  Use common time picker control
         6.  Targeted Windows 10 SDK
         7.  Clean up loading and saving data
-        8.  Updated wav files with ones under a known CC license
+        8.  Updated audio files with ones under a known CC license
+        9.  Added support for mp3 files
 
 TODO:
         1.  Add silent hours for chimes

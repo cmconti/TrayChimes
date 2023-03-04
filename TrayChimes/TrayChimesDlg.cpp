@@ -137,11 +137,11 @@ void CTrayChimesDlg::LoadDataFromRegistry()
     m_bDisplayMessage = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"DisplayMessage", FALSE);
     m_bPlayAlarmOnce = AfxGetApp()->GetProfileInt(L"ChimeSelection", L"PlayAlarmOnce", FALSE);
 
-    m_str15Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime15", L"HourChime.wav");
-    m_str30Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime30", L"HourChime.wav");
-    m_str45Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime45", L"HourChime.wav");
+    m_str15Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime15", L"HourChime.mp3");
+    m_str30Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime30", L"HourChime.mp3");
+    m_str45Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime45", L"HourChime.mp3");
     m_str00Chime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"Chime00", L"Westminster.wav");
-    m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"HourChime.wav");
+    m_strHourChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"ChimeHour", L"HourChime.mp3");
     m_strAlarmChime = AfxGetApp()->GetProfileString(L"ChimeSounds", L"AlarmChime", L"Alarm.wav");
 
     m_bRunOnStartup = FALSE;
@@ -281,6 +281,7 @@ BEGIN_MESSAGE_MAP(CTrayChimesDlg, CDialogEx)
     ON_MESSAGE(WM_PSADDTOTRAY, OnAddToTray)
     ON_REGISTERED_MESSAGE(WM_TASKBARCREATED, OnTaskBarCreated)
     ON_BN_CLICKED(ID_CLOSE, &CTrayChimesDlg::OnClose)
+    ON_MESSAGE(MM_MCINOTIFY, OnMciNotify)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -488,7 +489,7 @@ void CTrayChimesDlg::OnTimer(UINT nIDEvent)
             if (!m_bAlarmPlayed) //check to see if alarm has been played once this minute already
             {
                 m_bAlarmPlayed = TRUE;
-                ::sndPlaySound(m_strAlarmChime, SND_ASYNC);
+                PlayAudio(m_strAlarmChime);
 
                 if ((!::IsWindow(m_dlgAlarm.GetSafeHwnd())) && m_bDisplayMessage)
                 {
@@ -698,30 +699,36 @@ void CTrayChimesDlg::PlayNextChime()
 
     if (minute == 15)
     {
-        ::sndPlaySound(m_str15Chime, SND_SYNC | SND_NOSTOP);
+        PlayAudio(m_str15Chime, false);
     }
     else if (minute == 30)
     {
-        ::sndPlaySound(m_str30Chime, SND_SYNC | SND_NOSTOP);
+        PlayAudio(m_str30Chime, false);
     }
     else  if (minute == 45)
     {
-        ::sndPlaySound(m_str45Chime, SND_SYNC | SND_NOSTOP);
+        PlayAudio(m_str45Chime, false);
     }
     else
     {
         if (m_bChimeAt00)
-            ::sndPlaySound(m_str00Chime, SND_SYNC | SND_NOSTOP);
+        {
+            PlayAudio(m_str00Chime);
+        }
 
         if (m_bChimeHourCount)
         {
             int hour = m_tNextChime.GetHour();
             hour = hour % 12;
             if (hour == 0)
+            {
                 hour = 12;
+            }
 
             for (int ii = 0; ii < hour; ii++)
-                ::sndPlaySound(m_strHourChime, SND_SYNC | SND_NOSTOP);
+            {
+                PlayAudio(m_strHourChime, false);
+            }
         }
     }
 }
@@ -844,42 +851,93 @@ void CTrayChimesDlg::OnTimeChange()
     CDialogEx::OnTimeChange();
 }
 
-void CTrayChimesDlg::PreviewSound(CEdit& editControl)
+void CTrayChimesDlg::PlayAudio(CEdit& editControl, bool bAsync /*= true*/)
 {
     CString strPath;
     editControl.GetWindowText(strPath);
+    PlayAudio(strPath, bAsync);
+}
+
+void  CTrayChimesDlg::PlayAudio(CString& audioFile, bool bAsync /*= true*/)
+{
     ::sndPlaySound(NULL, SND_ASYNC);
-    ::sndPlaySound(strPath, SND_ASYNC);
+
+    if (audioFile.Right(4).CompareNoCase(L".wav") == 0)
+    {
+        UINT fuSound = bAsync ? SND_ASYNC : (SND_SYNC | SND_NOSTOP);
+        ::sndPlaySound(audioFile, fuSound);
+        return;
+    }
+
+    static bool guidSet = false;
+    CString songAlias(L"tc_sound");
+    if (!guidSet)
+    {
+        RPC_WSTR guidStr;
+        GUID guid;
+        HRESULT hr = CoCreateGuid(&guid);
+        if (hr == S_OK)
+        {
+            if (UuidToString(&guid, &guidStr) == RPC_S_OK)
+            {
+                songAlias.Format(L"tc_%ls", guidStr);
+                RpcStringFree(&guidStr);
+            }
+        }
+        guidSet = true;
+    }
+
+    CString openCmd;
+    openCmd.Format(L"open \"%ls\" type mpegvideo alias %ls", audioFile, songAlias);
+
+    LPCWSTR pszWait = bAsync ? L"notify" : L"wait";
+    HWND hCallback = bAsync ? m_hWnd : nullptr;
+    CString playCmd;
+    playCmd.Format(L"play %ls %ls", songAlias, pszWait);
+
+    CString closeCmd;
+    closeCmd.Format(L"close %ls", songAlias);
+
+    MCIERROR me = mciSendString(openCmd, NULL, 0, 0);
+
+    if (me == 0)
+    {
+        me = mciSendString(playCmd, NULL, 0, hCallback);
+        if (!bAsync)
+        {
+            mciSendString(closeCmd, NULL, 0, 0);
+        }
+    }
 }
 
 void CTrayChimesDlg::OnPlay00()
 {
-    PreviewSound(m_edit00Chime);
+    PlayAudio(m_edit00Chime);
 }
 
 void CTrayChimesDlg::OnPlay15()
 {
-    PreviewSound(m_edit15Chime);
+    PlayAudio(m_edit15Chime);
 }
 
 void CTrayChimesDlg::OnPlay30()
 {
-    PreviewSound(m_edit30Chime);
+    PlayAudio(m_edit30Chime);
 }
 
 void CTrayChimesDlg::OnPlay45()
 {
-    PreviewSound(m_edit45Chime);
+    PlayAudio(m_edit45Chime);
 }
 
 void CTrayChimesDlg::OnPlayHour()
 {
-    PreviewSound(m_editHourChime);
+    PlayAudio(m_editHourChime);
 }
 
 void CTrayChimesDlg::OnPlayAlarm()
 {
-    PreviewSound(m_editAlarmChime);
+    PlayAudio(m_editAlarmChime);
 }
 
 void  CTrayChimesDlg::BrowseForSound(CEdit& editControl)
@@ -887,7 +945,7 @@ void  CTrayChimesDlg::BrowseForSound(CEdit& editControl)
     CString strPath;
     editControl.GetWindowText(strPath);
     CFileDialog dlg(TRUE, L"*.wav", strPath, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav)|*.wav|All Files (*.*)|*.*||", this);
+        L"Sound Files (*.wav;*.mp3)|*.wav; *.mp3|All Files (*.*)|*.*||", this);
     if (dlg.DoModal() == IDOK)
     {
         editControl.SetWindowText(dlg.GetPathName());
@@ -958,4 +1016,20 @@ LRESULT CTrayChimesDlg::OnAddToTray(WPARAM wParam, LPARAM lParam)
 {
     SetTipText(TRUE);
     return 0;
+}
+
+LRESULT CTrayChimesDlg::OnMciNotify(WPARAM wFlags, LPARAM lDeviceID)
+{
+    //switch (wFlags)
+    //{
+    //case MCI_NOTIFY_SUCCESSFUL:
+    //    break;
+    //case MCI_NOTIFY_FAILURE:
+    //    break;
+    //case MCI_NOTIFY_SUPERSEDED:
+    //    break;
+    //}
+    mciSendCommand(lDeviceID, MCI_CLOSE, 0, NULL);
+
+    return 0L;
 }
