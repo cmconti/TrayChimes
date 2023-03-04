@@ -54,6 +54,7 @@ Release Info:
         5.  Use common time picker control
         6.  Targeted Windows 10 SDK
         7.  Clean up loading and saving data
+        8.  Updated wav files with ones under a known CC license
 
 TODO:
         1.  Add silent hours for chimes
@@ -61,11 +62,9 @@ TODO:
         3.  Modernize UI
         4.  Stop program on uninstall
         5.  Better alarm controls/granularity (e.g. weekday only, multiple alarms, etc.)
-        6.  Replace wav files with ones I am certain are free to use since I don't know where the
-            current ones came from 25 years ago.*sigh*
-        7.  Better icons and graphics
-        8.  Fix snooze with 'play alarm once'
-        9.  Github actions
+        6.  Better icons and graphics
+        7.  Fix snooze with 'play alarm once'
+        8.  Github actions
 
 Attributions:
 - Clock Image by Icon-Icons
@@ -73,3 +72,12 @@ Attributions:
   - https://icon-icons.com/license
 - Speaker Image by Microsoft from the Visual Studio Image library.
   - https://learn.microsoft.com/en-us/visualstudio/designers/the-visual-studio-image-library?view=vs-2022
+- Hour chime
+  - adapted from https://freesound.org/people/QuartzMMN/sounds/448693
+  - CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+- Alarm bell
+  - adapted from https://freesound.org/people/soundrecorder7/sounds/141287
+  - CC BY 3.0 https://creativecommons.org/licenses/by/3.0/
+- Westminster chime
+  - adapted from https://freesound.org/people/DWOBoyle/sounds/449275
+  - CC BY 3.0 https://creativecommons.org/licenses/by/3.0/

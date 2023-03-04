@@ -45,31 +45,36 @@ public:
     void Snooze();
 
 private:
-    CButton m_btnPlayAlarm;
-    CButton m_btnPlayHour;
-    CButton m_btnPlay45;
-    CButton m_btnPlay30;
-    CButton m_btnPlay15;
+    CEdit m_edit00Chime;
     CButton m_btnPlay00;
-    CDateTimeCtrl m_TimeSelection;
-
     BOOL m_bChimeAt00;
     CString m_str00Chime;
 
+    CEdit m_editHourChime;
+    CButton m_btnPlayHour;
     BOOL m_bChimeHourCount;
     CString m_strHourChime;
 
+    CEdit m_edit15Chime;
+    CButton m_btnPlay15;
     BOOL m_bChimeAt15;
     CString m_str15Chime;
 
+    CEdit m_edit30Chime;
+    CButton m_btnPlay30;
     BOOL m_bChimeAt30;
     CString m_str30Chime;
 
+    CEdit m_edit45Chime;
+    CButton m_btnPlay45;
     BOOL m_bChimeAt45;
     CString m_str45Chime;
 
+    CEdit m_editAlarmChime;
+    CButton m_btnPlayAlarm;
     BOOL m_bAlarmSet;
     CString m_strAlarmChime;
+    CDateTimeCtrl m_TimeSelection;
     COleDateTime m_timeAlarm;
     BOOL m_bPlayAlarmOnce;
 
@@ -117,6 +122,9 @@ protected:
     void SetNextChime();
     void PlayNextChime();
     void SetTipText(BOOL bAdd = FALSE);
+
+    void PreviewSound(CEdit& editControl);
+    void BrowseForSound(CEdit& editControl);
 
     // Generated message map functions
     virtual BOOL OnInitDialog();

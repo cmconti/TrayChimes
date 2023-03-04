@@ -198,29 +198,42 @@ void CTrayChimesDlg::SaveDataToRegistry()
 void CTrayChimesDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
-    DDX_Control(pDX, IDC_PLAY_ALARM, m_btnPlayAlarm);
-    DDX_Control(pDX, IDC_PLAY_HOUR, m_btnPlayHour);
-    DDX_Control(pDX, IDC_PLAY_45, m_btnPlay45);
-    DDX_Control(pDX, IDC_PLAY_30, m_btnPlay30);
-    DDX_Control(pDX, IDC_PLAY_15, m_btnPlay15);
+    DDX_Control(pDX, IDC_HOUR_CHIME, m_edit00Chime);
     DDX_Control(pDX, IDC_PLAY_00, m_btnPlay00);
-    DDX_Check(pDX, IDC_CHIME_15, m_bChimeAt15);
-    DDX_Check(pDX, IDC_CHIME_30, m_bChimeAt30);
-    DDX_Check(pDX, IDC_CHIME_45, m_bChimeAt45);
-    DDX_Check(pDX, IDC_CHIME_COUNT, m_bChimeHourCount);
     DDX_Check(pDX, IDC_CHIME_HOUR, m_bChimeAt00);
-    DDX_Text(pDX, IDC_15_CHIME, m_str15Chime);
-    DDX_Text(pDX, IDC_30_CHIME, m_str30Chime);
-    DDX_Text(pDX, IDC_45_CHIME, m_str45Chime);
     DDX_Text(pDX, IDC_HOUR_CHIME, m_str00Chime);
+
+    DDX_Control(pDX, IDC_HOUR_BONG, m_editHourChime);
+    DDX_Control(pDX, IDC_PLAY_HOUR, m_btnPlayHour);
+    DDX_Check(pDX, IDC_CHIME_COUNT, m_bChimeHourCount);
     DDX_Text(pDX, IDC_HOUR_BONG, m_strHourChime);
-    DDX_Text(pDX, IDC_ALARM_CHIME, m_strAlarmChime);
+
+    DDX_Control(pDX, IDC_15_CHIME, m_edit15Chime);
+    DDX_Control(pDX, IDC_PLAY_15, m_btnPlay15);
+    DDX_Check(pDX, IDC_CHIME_15, m_bChimeAt15);
+    DDX_Text(pDX, IDC_15_CHIME, m_str15Chime);
+
+    DDX_Control(pDX, IDC_30_CHIME, m_edit30Chime);
+    DDX_Control(pDX, IDC_PLAY_30, m_btnPlay30);
+    DDX_Check(pDX, IDC_CHIME_30, m_bChimeAt30);
+    DDX_Text(pDX, IDC_30_CHIME, m_str30Chime);
+
+    DDX_Control(pDX, IDC_45_CHIME, m_edit45Chime);
+    DDX_Control(pDX, IDC_PLAY_45, m_btnPlay45);
+    DDX_Check(pDX, IDC_CHIME_45, m_bChimeAt45);
+    DDX_Text(pDX, IDC_45_CHIME, m_str45Chime);
+
+    DDX_Control(pDX, IDC_ALARM_CHIME, m_editAlarmChime);
+    DDX_Control(pDX, IDC_PLAY_ALARM, m_btnPlayAlarm);
     DDX_Check(pDX, IDC_ALARM_SET, m_bAlarmSet);
-    DDX_Check(pDX, IDC_DISPLAY_MESSAGE, m_bDisplayMessage);
-    DDX_Check(pDX, IDC_ALARM_ONCE, m_bPlayAlarmOnce);
+    DDX_Text(pDX, IDC_ALARM_CHIME, m_strAlarmChime);
     DDX_Control(pDX, IDC_TIME_EDIT, m_TimeSelection);
-    DDX_Check(pDX, IDC_RUN_ON_STARTUP, m_bRunOnStartup);
     DDX_DateTimeCtrl(pDX, IDC_TIME_EDIT, m_timeAlarm);
+    DDX_Check(pDX, IDC_ALARM_ONCE, m_bPlayAlarmOnce);
+
+    DDX_Check(pDX, IDC_DISPLAY_MESSAGE, m_bDisplayMessage);
+
+    DDX_Check(pDX, IDC_RUN_ON_STARTUP, m_bRunOnStartup);
 
     if (pDX->m_bSaveAndValidate)
     {
@@ -831,94 +844,84 @@ void CTrayChimesDlg::OnTimeChange()
     CDialogEx::OnTimeChange();
 }
 
+void CTrayChimesDlg::PreviewSound(CEdit& editControl)
+{
+    CString strPath;
+    editControl.GetWindowText(strPath);
+    ::sndPlaySound(NULL, SND_ASYNC);
+    ::sndPlaySound(strPath, SND_ASYNC);
+}
+
 void CTrayChimesDlg::OnPlay00()
 {
-    ::sndPlaySound(m_str00Chime, SND_ASYNC);
+    PreviewSound(m_edit00Chime);
 }
 
 void CTrayChimesDlg::OnPlay15()
 {
-    ::sndPlaySound(m_str15Chime, SND_ASYNC);
+    PreviewSound(m_edit15Chime);
 }
 
 void CTrayChimesDlg::OnPlay30()
 {
-    ::sndPlaySound(m_str30Chime, SND_ASYNC);
+    PreviewSound(m_edit30Chime);
 }
 
 void CTrayChimesDlg::OnPlay45()
 {
-    ::sndPlaySound(m_str45Chime, SND_ASYNC);
+    PreviewSound(m_edit45Chime);
 }
 
 void CTrayChimesDlg::OnPlayHour()
 {
-    ::sndPlaySound(m_strHourChime, SND_ASYNC);
+    PreviewSound(m_editHourChime);
 }
 
 void CTrayChimesDlg::OnPlayAlarm()
 {
-    ::sndPlaySound(m_strAlarmChime, SND_ASYNC);
+    PreviewSound(m_editAlarmChime);
+}
+
+void  CTrayChimesDlg::BrowseForSound(CEdit& editControl)
+{
+    CString strPath;
+    editControl.GetWindowText(strPath);
+    CFileDialog dlg(TRUE, L"*.wav", strPath, OFN_FILEMUSTEXIST,
+        L"Sound Files (*.wav)|*.wav|All Files (*.*)|*.*||", this);
+    if (dlg.DoModal() == IDOK)
+    {
+        editControl.SetWindowText(dlg.GetPathName());
+    }
 }
 
 void CTrayChimesDlg::On15Browse()
 {
-    CFileDialog dlg(TRUE, L"*.wav", m_str15Chime, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav)|*.wav", this);
-    if (dlg.DoModal() == IDOK)
-    {
-        m_str15Chime = dlg.GetPathName();
-    }
+    BrowseForSound(m_edit15Chime);
 }
 
 void CTrayChimesDlg::On30Browse()
 {
-    CFileDialog dlg(TRUE, L"*.wav", m_str30Chime, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav)|*.wav", this);
-    if (dlg.DoModal() == IDOK)
-    {
-        m_str30Chime = dlg.GetPathName();
-    }
+    BrowseForSound(m_edit30Chime);
 }
 
 void CTrayChimesDlg::On45Browse()
 {
-    CFileDialog dlg(TRUE, L"*.wav", m_str45Chime, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav)|*.wav", this);
-    if (dlg.DoModal() == IDOK)
-    {
-        m_str45Chime = dlg.GetPathName();
-    }
+    BrowseForSound(m_edit45Chime);
 }
 
 void CTrayChimesDlg::OnBongBrowse()
 {
-    CFileDialog dlg(TRUE, L"*.wav", m_strHourChime, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav)|*.wav", this);
-    if (dlg.DoModal() == IDOK)
-    {
-        m_strHourChime = dlg.GetPathName();
-    }
+    BrowseForSound(m_editHourChime);
 }
 
 void CTrayChimesDlg::OnHourBrowse()
 {
-    CFileDialog dlg(TRUE, L"*.wav", m_str00Chime, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav)|*.wav", this);
-    if (dlg.DoModal() == IDOK)
-    {
-        m_str00Chime = dlg.GetPathName();
-    }
+    BrowseForSound(m_edit00Chime);
 }
 
 void CTrayChimesDlg::OnAlarmBrowse()
 {
-    CFileDialog dlg(TRUE, L"*.wav", m_strAlarmChime, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav)|*.wav", this);
-    if (dlg.DoModal() == IDOK)
-    {
-        m_strAlarmChime = dlg.GetPathName();
-    }
+    BrowseForSound(m_editAlarmChime);
 }
 
 void CTrayChimesDlg::OnShowWindow(BOOL bShow, UINT nStatus)
