@@ -6,6 +6,8 @@
 #include "TrayChimes.h"
 #include "TrayChimesDlg.h"
 
+#include <filesystem>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -20,6 +22,8 @@ END_MESSAGE_MAP()
 
 CTrayChimesApp::CTrayChimesApp()
 {
+    // support Restart Manager
+    m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
 }
 
 // The one and only CTrayChimesApp object
@@ -112,6 +116,17 @@ BOOL CTrayChimesApp::InitInstance()
     //  of your final executable, you should remove from the following
     //  the specific initialization routines you do not need.
     SetRegistryKey(L"PretzelSoft");
+
+    // Get full executable path
+    wchar_t buffer[MAX_PATH];
+    GetModuleFileName(NULL, buffer, _countof(buffer));
+
+    // Get executable directory
+    std::filesystem::path path(buffer);
+    path = path.parent_path();
+
+    // Set current path to that directory
+    std::filesystem::current_path(path);
 
     CTrayChimesDlg dlg;
     m_pMainWnd = &dlg;
