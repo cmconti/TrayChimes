@@ -80,13 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="res\readme.txt" />
-    <CopyFileToFolders Include="res\Alarm.wav">
+    <CopyFileToFolders Include="res\Alarm.mp3">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="res\HourChime.mp3">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="res\Westminster.wav">
+    <CopyFileToFolders Include="res\Westminster.mp3">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
   </ItemGroup>
