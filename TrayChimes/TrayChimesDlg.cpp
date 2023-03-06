@@ -263,14 +263,8 @@ BEGIN_MESSAGE_MAP(CTrayChimesDlg, CDialogEx)
     ON_BN_CLICKED(IDC_PLAY_30, OnPlay30)
     ON_BN_CLICKED(IDC_PLAY_45, OnPlay45)
     ON_BN_CLICKED(IDC_PLAY_HOUR, OnPlayHour)
-    ON_BN_CLICKED(IDC_15_BROWSE, On15Browse)
-    ON_BN_CLICKED(IDC_30_BROWSE, On30Browse)
-    ON_BN_CLICKED(IDC_45_BROWSE, On45Browse)
-    ON_BN_CLICKED(IDC_BONG_BROWSE, OnBongBrowse)
-    ON_BN_CLICKED(IDC_HOUR_BROWSE, OnHourBrowse)
     ON_WM_SHOWWINDOW()
     ON_WM_WINDOWPOSCHANGING()
-    ON_BN_CLICKED(IDC_ALARM_BROWSE, OnAlarmBrowse)
     ON_BN_CLICKED(IDC_PLAY_ALARM, OnPlayAlarm)
     ON_WM_DESTROY()
     ON_BN_CLICKED(IDC_EDIT_MESSAGE, OnEditMessage)
@@ -377,6 +371,15 @@ BOOL CTrayChimesDlg::OnInitDialog()
     //  when the application's main window is not a dialog
     SetIcon(m_hIcon, TRUE);   // Set big icon
     SetIcon(m_hIcon, FALSE);  // Set small icon
+
+    CString defaultExtension(L".wav; .mp3");
+    CString extensionFilter(L"Sound Files (*.wav;*.mp3)|*.wav; *.mp3|All Files (*.*)|*.*||");
+    m_edit00Chime.EnableFileBrowseButton(defaultExtension, extensionFilter);
+    m_editHourChime.EnableFileBrowseButton(defaultExtension, extensionFilter);
+    m_edit15Chime.EnableFileBrowseButton(defaultExtension, extensionFilter);
+    m_edit30Chime.EnableFileBrowseButton(defaultExtension, extensionFilter);
+    m_edit45Chime.EnableFileBrowseButton(defaultExtension, extensionFilter);
+    m_editAlarmChime.EnableFileBrowseButton(defaultExtension, extensionFilter);
 
     m_btnPlay00.SetIcon(m_hIconSpeaker);
     m_btnPlay15.SetIcon(m_hIconSpeaker);
@@ -940,48 +943,6 @@ void CTrayChimesDlg::OnPlayAlarm()
     PlayAudio(m_editAlarmChime);
 }
 
-void  CTrayChimesDlg::BrowseForSound(CEdit& editControl)
-{
-    CString strPath;
-    editControl.GetWindowText(strPath);
-    CFileDialog dlg(TRUE, L"*.wav", strPath, OFN_FILEMUSTEXIST,
-        L"Sound Files (*.wav;*.mp3)|*.wav; *.mp3|All Files (*.*)|*.*||", this);
-    if (dlg.DoModal() == IDOK)
-    {
-        editControl.SetWindowText(dlg.GetPathName());
-    }
-}
-
-void CTrayChimesDlg::On15Browse()
-{
-    BrowseForSound(m_edit15Chime);
-}
-
-void CTrayChimesDlg::On30Browse()
-{
-    BrowseForSound(m_edit30Chime);
-}
-
-void CTrayChimesDlg::On45Browse()
-{
-    BrowseForSound(m_edit45Chime);
-}
-
-void CTrayChimesDlg::OnBongBrowse()
-{
-    BrowseForSound(m_editHourChime);
-}
-
-void CTrayChimesDlg::OnHourBrowse()
-{
-    BrowseForSound(m_edit00Chime);
-}
-
-void CTrayChimesDlg::OnAlarmBrowse()
-{
-    BrowseForSound(m_editAlarmChime);
-}
-
 void CTrayChimesDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 {
     if (m_bAllowShowWindow)
@@ -1033,3 +994,4 @@ LRESULT CTrayChimesDlg::OnMciNotify(WPARAM wFlags, LPARAM lDeviceID)
 
     return 0L;
 }
+

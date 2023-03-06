@@ -45,32 +45,32 @@ public:
     void Snooze();
 
 private:
-    CEdit m_edit00Chime;
+    CMFCEditBrowseCtrl m_edit00Chime;
     CButton m_btnPlay00;
     BOOL m_bChimeAt00;
     CString m_str00Chime;
 
-    CEdit m_editHourChime;
+    CMFCEditBrowseCtrl m_editHourChime;
     CButton m_btnPlayHour;
     BOOL m_bChimeHourCount;
     CString m_strHourChime;
 
-    CEdit m_edit15Chime;
+    CMFCEditBrowseCtrl m_edit15Chime;
     CButton m_btnPlay15;
     BOOL m_bChimeAt15;
     CString m_str15Chime;
 
-    CEdit m_edit30Chime;
+    CMFCEditBrowseCtrl m_edit30Chime;
     CButton m_btnPlay30;
     BOOL m_bChimeAt30;
     CString m_str30Chime;
 
-    CEdit m_edit45Chime;
+    CMFCEditBrowseCtrl m_edit45Chime;
     CButton m_btnPlay45;
     BOOL m_bChimeAt45;
     CString m_str45Chime;
 
-    CEdit m_editAlarmChime;
+    CMFCEditBrowseCtrl m_editAlarmChime;
     CButton m_btnPlayAlarm;
     BOOL m_bAlarmSet;
     CString m_strAlarmChime;
@@ -142,14 +142,8 @@ protected:
     afx_msg void OnPlay30();
     afx_msg void OnPlay45();
     afx_msg void OnPlayHour();
-    afx_msg void On15Browse();
-    afx_msg void On30Browse();
-    afx_msg void On45Browse();
-    afx_msg void OnBongBrowse();
-    afx_msg void OnHourBrowse();
     afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
     afx_msg void OnWindowPosChanging(WINDOWPOS FAR* lpwndpos);
-    afx_msg void OnAlarmBrowse();
     afx_msg void OnPlayAlarm();
     afx_msg void OnDestroy();
     afx_msg void OnEditMessage();

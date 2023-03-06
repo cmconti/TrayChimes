@@ -56,16 +56,16 @@ Release Info:
         7.  Clean up loading and saving data
         8.  Updated audio files with ones under a known CC license
         9.  Added support for mp3 files
+        10.  Stop program on uninstall/reinstall by supporting restart manager
 
 TODO:
         1.  Add silent hours for chimes
         2.  Add mute (also cancel any currently playing chimes/alarms)
         3.  Modernize UI
-        4.  Stop program on uninstall
-        5.  Better alarm controls/granularity (e.g. weekday only, multiple alarms, etc.)
-        6.  Better icons and graphics
-        7.  Fix snooze with 'play alarm once'
-        8.  Github actions
+        4.  Better alarm controls/granularity (e.g. weekday only, multiple alarms, etc.)
+        5.  Better icons and graphics
+        6.  Fix snooze with 'play alarm once'
+        7.  Github actions
 
 Attributions:
 - Clock Image by Icon-Icons
