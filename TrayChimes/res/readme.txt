@@ -67,6 +67,7 @@ TODO:
         5.  Better icons and graphics
         6.  Fix snooze with 'play alarm once'
         7.  Github actions
+        8.  Handle Win10+ light/dark mode
 
 Attributions:
 - Clock Image by Icon-Icons
