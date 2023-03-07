@@ -23,11 +23,12 @@ protected:
 
     // Implementation
 protected:
+    afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+    afx_msg void OnPaint();
     DECLARE_MESSAGE_MAP();
 
 private:
-    CPngImage m_RegulatorImg;
-    CStatic m_staticImage;
+    Gdiplus::Bitmap* m_pBitmap;
 };
 
 // CTrayChimesDlg dialog
@@ -153,5 +154,6 @@ protected:
     afx_msg void OnPopupProperties();
     afx_msg LRESULT OnAddToTray(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnMciNotify(WPARAM wParam, LPARAM lParam);
+    afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
     DECLARE_MESSAGE_MAP();
 };

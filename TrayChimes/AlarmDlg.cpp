@@ -29,6 +29,7 @@ void CAlarmDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAlarmDlg, CDialogEx)
     ON_BN_CLICKED(IDC_SNOOZE, OnSnooze)
+    ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -61,4 +62,9 @@ void CAlarmDlg::OnSnooze()
     pParent->Snooze();
 
     OnOK();
+}
+
+HBRUSH CAlarmDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+    return (HBRUSH)GetStockObject(WHITE_BRUSH);
 }

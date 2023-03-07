@@ -57,6 +57,7 @@ Release Info:
         8.  Updated audio files with ones under a known CC license
         9.  Added support for mp3 files
         10.  Stop program on uninstall/reinstall by supporting restart manager
+        11.  Partially modernized the UI to make everything look cleaner
 
 TODO:
         1.  Add silent hours for chimes

@@ -10,6 +10,8 @@
 #include <mmsystem.h>
 #include <shellapi.h>
 
+#include "GDIPlusHelpers.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -17,62 +19,42 @@
 const UINT WM_TASKBARCREATED =
 ::RegisterWindowMessage(L"TaskbarCreated");
 
-CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX), m_pBitmap(nullptr)
 {
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
-    DDX_Control(pDX, IDC_REGULATOR, m_staticImage);
-}
-
-//https://stackoverflow.com/questions/2770855/how-do-you-scale-a-cbitmap-object
-void ResizeBitmap(CBitmap& bmp_src, CBitmap& bmp_dst, int dstW, int dstH)
-{
-    BITMAP bm = { 0 };
-    bmp_src.GetBitmap(&bm);
-    auto size = CSize(bm.bmWidth, bm.bmHeight);
-    CWindowDC wndDC(NULL);
-    CDC srcDC;
-    srcDC.CreateCompatibleDC(&wndDC);
-    auto oldSrcBmp = srcDC.SelectObject(&bmp_src);
-
-    CDC destDC;
-    destDC.CreateCompatibleDC(&wndDC);
-    bmp_dst.CreateCompatibleBitmap(&wndDC, dstW, dstH);
-    auto oldDestBmp = destDC.SelectObject(&bmp_dst);
-
-    destDC.StretchBlt(0, 0, dstW, dstH, &srcDC, 0, 0, size.cx, size.cy, SRCCOPY);
 }
 
 BOOL CAboutDlg::OnInitDialog()
 {
     CDialogEx::OnInitDialog();
 
-    VERIFY(m_RegulatorImg.Load(IDB_REGULATOR_PNG));
-
-    BITMAP bm = { 0 };
-    m_RegulatorImg.GetBitmap(&bm);
-    auto imgSize = CSize(bm.bmWidth, bm.bmHeight);
-
-    //CRect clientRect;
-    //m_staticImage.GetClientRect(&clientRect);
-
-    //auto ctrlHeight = clientRect.Height();
-    auto ctrlHeight = 120;
-
-    auto imgAspectRatio = (double)imgSize.cx / (double)imgSize.cy;
-
-    CBitmap resizedImg;
-    ResizeBitmap(m_RegulatorImg, resizedImg, (int)((double)ctrlHeight * imgAspectRatio), ctrlHeight);
-    m_staticImage.SetBitmap(resizedImg);
+    //TODO, get dlg height, less margins
+    m_pBitmap = LoadPNGBitmap(180);
 
     return FALSE;
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+    ON_WM_CTLCOLOR()
+    ON_WM_PAINT()
 END_MESSAGE_MAP()
+
+HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+    return (HBRUSH)GetStockObject(WHITE_BRUSH);
+}
+
+void CAboutDlg::OnPaint()
+{
+    CPaintDC dc(this); // device context for painting
+
+    Gdiplus::Graphics graphics(dc);
+    graphics.DrawImage(m_pBitmap, Gdiplus::Point(0, 0));
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CTrayChimesDlg dialog
@@ -276,6 +258,7 @@ BEGIN_MESSAGE_MAP(CTrayChimesDlg, CDialogEx)
     ON_REGISTERED_MESSAGE(WM_TASKBARCREATED, OnTaskBarCreated)
     ON_BN_CLICKED(ID_CLOSE, &CTrayChimesDlg::OnClose)
     ON_MESSAGE(MM_MCINOTIFY, OnMciNotify)
+    ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -995,3 +978,7 @@ LRESULT CTrayChimesDlg::OnMciNotify(WPARAM wFlags, LPARAM lDeviceID)
     return 0L;
 }
 
+HBRUSH CTrayChimesDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+    return (HBRUSH)GetStockObject(WHITE_BRUSH);
+}

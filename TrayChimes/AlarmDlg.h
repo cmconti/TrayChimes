@@ -32,5 +32,6 @@ protected:
     virtual void OnOK();
     virtual BOOL OnInitDialog();
     afx_msg void OnSnooze();
+    afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
     DECLARE_MESSAGE_MAP();
 };

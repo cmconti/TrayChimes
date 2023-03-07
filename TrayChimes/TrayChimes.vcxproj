@@ -193,6 +193,7 @@
   <ItemGroup>
     <ClInclude Include="AlarmDlg.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GDIPlusHelpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="MessageDlg.h" />
     <ClInclude Include="Resource.h" />

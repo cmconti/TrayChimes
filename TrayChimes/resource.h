@@ -36,7 +36,6 @@
 #define IDC_EDIT_MESSAGE                1030
 #define IDC_MESSAGE                     1031
 #define IDC_SNOOZE                      1032
-#define IDC_REGULATOR                   1033
 #define IDC_RUN_ON_STARTUP              1034
 #define ID_CLOSE                        1035
 #define ID_POPUP_PROPERTIES             32771

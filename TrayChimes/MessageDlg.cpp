@@ -26,7 +26,14 @@ void CMessageDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CMessageDlg, CDialogEx)
+    ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CMessageDlg message handlers
+
+
+HBRUSH CMessageDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+    return (HBRUSH)GetStockObject(WHITE_BRUSH);
+}

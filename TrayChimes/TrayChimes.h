@@ -29,6 +29,9 @@ public:
     HWND GetSharedHWND();
 
     DECLARE_MESSAGE_MAP();
+
+private:
+    ULONG_PTR m_gdiplusToken;
 };
 
 /////////////////////////////////////////////////////////////////////////////

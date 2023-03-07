@@ -90,6 +90,9 @@ BOOL CTrayChimesApp::InitInstance()
         return FALSE;
     }
 
+    Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+    Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, NULL);
+
     // InitCommonControlsEx() is required on Windows XP if an application
     // manifest specifies use of ComCtl32.dll version 6 or later to enable
     // visual styles.  Otherwise, any window creation will fail.
@@ -159,6 +162,8 @@ int CTrayChimesApp::ExitInstance()
     ::UnmapViewOfFile(m_lpvMem);
     // Close the process's handle to the file-mapping object.
     ::CloseHandle(m_hMapObject);
+
+    Gdiplus::GdiplusShutdown(m_gdiplusToken);
 
     return CWinApp::ExitInstance();
 }
