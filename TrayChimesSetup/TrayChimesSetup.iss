@@ -2,11 +2,19 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TrayChimes"
-#define MyAppVersion "1.30"
+#define MyAppExeName MyAppName + ".exe"
+#define MyAppExeSrcPath '..\' + Config + '\' + MyAppExeName
+
 #define MyAppPublisher "PretzelSoft"
 #define MyAppURL "https://github.com/cmconti/TrayChimes"
-#define MyAppExeName "TrayChimes.exe"
-#define MyApplicationVersion GetVersionNumbersString('..\' + Config + '\' + MyAppExeName)
+#define MyApplicationVersion GetVersionNumbersString(MyAppExeSrcPath)
+
+#define GetMajorMinorVersionString(str FileName) \
+  Local[0] = GetVersionNumbersString(FileName), \
+  Local[1] = DeleteToFirstPeriod(Local[0]) + '.' + DeleteToFirstPeriod(Local[0]), \
+  Local[1]
+
+#define MyAppVersion GetMajorMinorVersionString(MyAppExeSrcPath)
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
