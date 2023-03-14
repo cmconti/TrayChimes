@@ -45,14 +45,10 @@ jobs:
         $days = $daysInterval.Days
         $secs = [int]($secsInterval.TotalSeconds / 2)
 
-        ls
         $file = '.\TrayChimes\TrayChimes.rc'
-        ls $file
         $rcContents = Get-Content $file -Encoding Windows-1252
-        $rcContents
         $rcContents = $rcContents -replace '^(\s*FILEVERSION\s*\d*,\d*,).*',"`${1}$days,$secs"
-        $rcContents
-        $rcContents = $rcContents -replace '^(\s*VALUE\s*"FileVersion",\s* "\d*\.\d*\.).*', "`${1}$days.$secs"
+        $rcContents = $rcContents -replace '^(\s*VALUE\s*"FileVersion",\s* "\d*\.\d*\.).*', "`${1}$days.$secs`""
         $rcContents
         $rcContents | Set-Content $file -Encoding Windows-1252
 
