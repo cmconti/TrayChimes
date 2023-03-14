@@ -45,6 +45,7 @@ jobs:
         $days = $daysInterval.Days
         $secs = [int]($secsInterval.TotalSeconds / 2)
 
+        ls
         $file = '.\TrayChimes\TrayChimes.rc'
         $rcContents = Get-Content $file -Encoding Windows-1252
         $rcContents = $rcContents -replace '^(\s*FILEVERSION\s*\d*,\d*,).*',"`${1}$days,$secs"
