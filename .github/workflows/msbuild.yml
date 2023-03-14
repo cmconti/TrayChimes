@@ -47,12 +47,17 @@ jobs:
 
         ls
         $file = '.\TrayChimes\TrayChimes.rc'
+        ls $file
         $rcContents = Get-Content $file -Encoding Windows-1252
+        $rcContents
         $rcContents = $rcContents -replace '^(\s*FILEVERSION\s*\d*,\d*,).*',"`${1}$days,$secs"
+        $rcContents
         $rcContents = $rcContents -replace '^(\s*VALUE\s*"FileVersion",\s* "\d*\.\d*\.).*', "`${1}$days.$secs"
+        $rcContents
         $rcContents | Set-Content $file -Encoding Windows-1252
 
         $version = ($rcContents | Select-String '^\s*VALUE\s*"FileVersion",\s* "(\d*\.\d*\.\d*\.\d*)"').Matches[0].Groups[1].Value
+        $version
         Write-Output "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
     - name: Restore NuGet packages
