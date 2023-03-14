@@ -34,6 +34,7 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
+    # modeled on https://www.deltics.co.nz/blog/posts/3000/
     - name: Set version info
       run: |
         $baseDate = [datetime]"01/01/2000"
@@ -49,11 +50,10 @@ jobs:
         $rcContents = Get-Content $file -Encoding Windows-1252
         $rcContents = $rcContents -replace '^(\s*FILEVERSION\s*\d*,\d*,).*',"`${1}$days,$secs"
         $rcContents = $rcContents -replace '^(\s*VALUE\s*"FileVersion",\s* "\d*\.\d*\.).*', "`${1}$days.$secs`""
-        $rcContents
         $rcContents | Set-Content $file -Encoding Windows-1252
 
         $version = ($rcContents | Select-String '^\s*VALUE\s*"FileVersion",\s* "(\d*\.\d*\.\d*\.\d*)"').Matches[0].Groups[1].Value
-        $version
+        Write-Output "BUILD_VERSION=$version"
         Write-Output "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
     - name: Restore NuGet packages
