@@ -81,6 +81,6 @@ jobs:
       with:
         fail_on_unmatched_files: true
         files: |
-          "Setup/${{env.BUILD_CONFIGURATION}}/TrayChimesSetup.exe"
+          Setup/${{env.BUILD_CONFIGURATION}}/TrayChimesSetup.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
