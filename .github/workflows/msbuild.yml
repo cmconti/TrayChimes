@@ -34,7 +34,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.3.1
 
     # modeled on https://www.deltics.co.nz/blog/posts/3000/
     - name: Set version info
