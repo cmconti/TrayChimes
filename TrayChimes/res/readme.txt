@@ -66,8 +66,9 @@ TODO:
         4.  Better alarm controls/granularity (e.g. weekday only, multiple alarms, etc.)
         5.  Better icons and graphics
         6.  Fix snooze with 'play alarm once'
-        7.  Github actions
+        7.  Github actions to build and to create release
         8.  Handle Win10+ light/dark mode
+        9.  Update root readme.md
 
 Attributions:
 - Clock Image by Icon-Icons
